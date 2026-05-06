@@ -72,7 +72,7 @@
         #btn-more:hover { background-color: var(--rojo-titulos); color: var(--blanco); }
 
         /* =========================================
-           SISTEMA DE MODALES E IMAGEN 3D
+           SISTEMA DE MODALES Y BOTONES
            ========================================= */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(3px); }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
@@ -87,14 +87,25 @@
         .btn-no { background: #ef4444; color: white; } .btn-no:hover { background: #dc2626; }
         .btn-primary { background: var(--rojo-titulos); color: white; margin-top: 15px; display: inline-block; }
         
-        /* ESTILOS Y ANIMACIONES DEL INGENIERO 3D */
-        .eng-img { 
-            width: 120px; height: 120px; object-fit: contain; background: #fdf2f8; 
-            border-radius: 50%; border: 3px solid #f9a8d4; margin-bottom: 10px; transition: all 0.3s;
+        /* =========================================
+           ESTILOS Y ANIMACIONES FOTO INGENIERO
+           ========================================= */
+        .eng-photo { 
+            width: 120px; height: 120px; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            border: 4px solid #f9a8d4; 
+            margin-bottom: 10px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            transition: all 0.3s;
         }
-        .eng-img.big { 
-            width: 220px; height: 220px; background: transparent; border: none; border-radius: 0; filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.3)); 
+        
+        .eng-photo.big { 
+            width: 220px; height: 220px; 
+            border-width: 6px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3); 
         }
+        
         .anim-angry { animation: shake 0.4s infinite; }
         .anim-laughing { animation: bounce 0.5s infinite; }
         .anim-wink { animation: winkTilt 1.5s infinite; }
@@ -104,18 +115,19 @@
         @keyframes winkTilt { 0%, 100% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(10deg) scale(1.05); } }
 
         /* =========================================
-           PANTALLA 2: EL TRILE (JUEGO 1)
+           PANTALLA 2 Y 3: JUEGOS
            ========================================= */
-        #page-game1 { display: none; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; position: relative; z-index: 10; width: 100vw;}
+        #page-game1, #page-game2 { display: none; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; position: relative; z-index: 10; width: 100vw;}
         .game-panel { background: rgba(255, 255, 255, 0.95); padding: 40px 20px; border-radius: 20px; width: 90%; max-width: 600px; text-align: center; box-shadow: 0 15px 30px rgba(0,0,0,0.2); border: 5px dashed var(--rojo-titulos); position: relative; overflow: hidden; box-sizing: border-box;}
         
         .game-title { color: var(--rojo-oscuro); font-size: 2rem; margin-bottom: 10px; opacity: 0; transition: opacity 0.5s ease-in-out; }
         #game1-subtitle { color: #666; margin-bottom: 20px; opacity: 0; transition: opacity 0.5s ease-in-out; font-weight: bold; font-style: italic; }
 
-        #big-announcement {
-            position: absolute; top: 35%; left: 50%; transform: translate(-50%, -50%) scale(0);
-            font-size: 2.5rem; color: #ff69b4; text-shadow: 0 0 10px white, 2px 2px 5px rgba(0,0,0,0.4);
-            font-weight: bold; opacity: 0; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); z-index: 100; width: 100%; pointer-events: none;
+        /* TEXTO GIGANTE Y LLAVE (NEGRO) */
+        #big-announcement { 
+            position: absolute; top: 35%; left: 50%; transform: translate(-50%, -50%) scale(0); 
+            font-size: 2.5rem; color: #000000; text-shadow: 0 0 15px rgba(255, 255, 255, 1), 0 0 5px rgba(255, 255, 255, 0.8); 
+            font-weight: bold; opacity: 0; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); z-index: 100; width: 100%; pointer-events: none; 
         }
         #big-announcement.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 
@@ -126,12 +138,7 @@
         .cup { width: 70px; height: 90px; background: linear-gradient(to right, #dc2626, #9f1239); position: absolute; bottom: 150px; transform: translateX(-50%); z-index: 5; transition: left 0.85s ease-in-out, bottom 0.5s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border-radius: 5px 5px 15px 15px; border-bottom: 15px solid #b91c1c; }
         .cup.lifted { bottom: 80px !important; }
 
-        /* =========================================
-           PANTALLA 3: LOS BAÚLES (JUEGO 2)
-           ========================================= */
-        #page-game2 { display: none; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; position: relative; z-index: 10; width: 100vw;}
         #typewriter-question { font-size: 1.5rem; font-weight: bold; color: var(--rojo-oscuro); min-height: 60px; margin-bottom: 30px; padding: 0 20px; }
-        
         .chests-container { display: flex; justify-content: center; gap: 30px; margin-top: 30px; position: relative; }
         .chest-wrapper { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.2s; }
         .chest-wrapper:hover { transform: scale(1.1); }
@@ -144,31 +151,29 @@
         .chest-wrapper.open .emoji-hint { opacity: 0; }
 
         #flying-key { position: absolute; font-size: 3rem; bottom: -50px; left: 50%; transform: translateX(-50%); opacity: 0; transition: all 1s ease-in-out; z-index: 100; pointer-events: none; }
-
         .party-details { background: #ffe4e6; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 5px solid var(--rojo-titulos); text-align: left; }
+        
         .burst-confetti { position: fixed; width: 10px; height: 10px; z-index: 1000; pointer-events: none; animation: explode 1.5s ease-out forwards; }
         @keyframes explode { 0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; } 100% { transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0.5); opacity: 0; } }
 
-        /* =========================================
-           PANTALLAS FINALES (INGENIERO Y NEGRO)
-           ========================================= */
         #page-engineer { display: none; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; position: relative; z-index: 50; width: 100vw; }
         .speech-bubble {
             background: white; border-radius: 20px; padding: 15px 30px; font-size: 1.8rem; font-weight: bold; color: var(--rojo-titulos);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2); position: relative; margin-bottom: 30px; animation: popIn 0.5s cubic-bezier(0.4,0,0.2,1);
             text-align: center; max-width: 90%; box-sizing: border-box;
         }
-        .speech-bubble::after {
-            content: ''; position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%);
-            border-width: 15px 15px 0; border-style: solid; border-color: white transparent transparent transparent;
-        }
+        .speech-bubble::after { content: ''; position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); border-width: 15px 15px 0; border-style: solid; border-color: white transparent transparent transparent; }
         @keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
 
-        #page-final {
-            display: none; flex-direction: column; justify-content: center; align-items: center; height: 100vh; width: 100vw;
-            background: black; color: white; position: fixed; top: 0; left: 0; z-index: 9999;
-        }
-        .fade-in-text { font-size: 2.5rem; text-align: center; opacity: 0; animation: fadeIn 3s forwards; font-style: italic; padding: 0 20px; box-sizing: border-box;}
+        /* =========================================
+           PANTALLA FINAL Y RETRASOS
+           ========================================= */
+        #page-final { display: none; flex-direction: column; justify-content: center; align-items: center; height: 100vh; width: 100vw; background: black; color: white; position: fixed; top: 0; left: 0; z-index: 9999; }
+        .fade-in-text { font-size: 2.5rem; text-align: center; opacity: 0; animation: fadeIn 3s forwards; font-style: italic; padding: 0 20px; box-sizing: border-box; margin-bottom: 10px;}
+        
+        .fade-in-delayed-text { font-size: 1.8rem; text-align: center; opacity: 0; animation: fadeIn 2s forwards; animation-delay: 4s; margin-top: 20px; color: #fbcfe8; font-weight: bold; }
+        .fade-in-delayed-img { opacity: 0; animation: fadeIn 2s forwards; animation-delay: 4.5s; margin-top: 20px; border-radius: 15px; max-width: 90%; width: 280px; box-shadow: 0 5px 15px rgba(255,255,255,0.2); }
+
         @keyframes fadeIn { to { opacity: 1; } }
 
         /* =========================================
@@ -201,14 +206,20 @@
             #flying-key { font-size: 2.2rem; }
             #typewriter-question { font-size: 1.2rem; padding: 0 10px; }
             
-            /* Modales y Final */
+            /* Modales y Foto Móvil */
             .modal-box { width: 290px; padding: 20px; }
             .btn { padding: 8px 16px; font-size: 0.9rem; }
             .party-details { font-size: 0.9rem; padding: 10px; }
-            .eng-img { width: 90px; height: 90px; }
-            .eng-img.big { width: 160px; height: 160px; }
+            
+            /* Escala de la foto en celulares */
+            .eng-photo { width: 100px; height: 100px; }
+            .eng-photo.big { width: 180px; height: 180px; }
+            
             .speech-bubble { font-size: 1.3rem; padding: 12px 20px; }
             .fade-in-text { font-size: 1.8rem; }
+            
+            .fade-in-delayed-text { font-size: 1.3rem; margin-top: 15px; }
+            .fade-in-delayed-img { width: 220px; margin-top: 15px; }
         }
     </style>
 </head>
@@ -229,7 +240,7 @@
         <div class="card-container" id="card-container">
             <div class="card">
                 <div class="card-cover">
-                    <div class="card-front"><h1>Para ti ❤️</h1><p>Toca para abrir ✨</p></div>
+                    <div class="card-front"><h1>Para ti mi reina 👑</h1><p>Toca para abrir ✨</p></div>
                     <div class="card-back-cover">🎉</div>
                 </div>
                 <div class="card-inside">
@@ -287,22 +298,25 @@
         </div>
     </section>
 
-    <!-- ================= PANTALLA 4: INGENIERO ANIMADO ================= -->
+    <!-- ================= PANTALLA 4: INGENIERO FOTO FINAL ================= -->
     <section id="page-engineer">
         <div class="speech-bubble">¿Así o más especial? 😉</div>
-        <img id="img-big-engineer" src="https://png.pngtree.com/png-clipart/20250217/original/pngtree-software-engineer-3d-icon-in-clean-design-isolated-on-white-background-png-image_20173911.png" alt="Ingeniero" class="eng-img big">
+        <img id="img-big-engineer" src="https://nalef-initiative.github.io/static/Andres_Quinones.jpeg" alt="Andres" class="eng-photo big">
     </section>
 
     <!-- ================= PANTALLA 5: FINAL NEGRO ================= -->
     <section id="page-final">
         <h1 class="fade-in-text">Gracias por llegar a mi vida ❤️</h1>
+        <h2 class="fade-in-delayed-text">¿ Cuantos puntos gane ?</h2>
+        <img src="https://i.gifer.com/8V3.gif" alt="Gato Pidiendo Puntos" class="fade-in-delayed-img">
     </section>
 
     <!-- ================= MODALES ================= -->
     <div class="modal-overlay" id="modal-engineer">
         <div class="modal-box">
-            <!-- AQUÍ ESTÁ LA NUEVA IMAGEN 3D DEL INGENIERO -->
-            <img id="img-engineer" src="https://png.pngtree.com/png-clipart/20250217/original/pngtree-software-engineer-3d-icon-in-clean-design-isolated-on-white-background-png-image_20173911.png" alt="Ingeniero" class="eng-img">
+            <!-- FOTO EN LOS MODALES -->
+            <img id="img-engineer" src="https://nalef-initiative.github.io/static/Andres_Quinones.jpeg" alt="Andres" class="eng-photo">
+            
             <h2 id="eng-title">Título</h2>
             <div id="eng-text">Texto</div>
             <button class="btn btn-primary" id="eng-btn">Botón</button>
@@ -313,7 +327,7 @@
     <div class="modal-overlay" id="modal-question">
         <div class="modal-box">
             <h2>¡Espera! 🛑</h2>
-            <p>Resuelve los retos y encuentra tu mensaje especial.</p>
+            <p>Resuelve los retos y encuentra tu invitación especial.</p>
             <p>¿Estás lista?</p>
             <div class="btn-group">
                 <button class="btn btn-yes" id="btn-yes">Sí, acepto el reto</button>
@@ -361,18 +375,23 @@
             }
         }
 
-        // 2. Tarjeta Inicial 
+        // 2. Tarjeta Inicial y Redirección Automática
         const cardContainer = document.getElementById('card-container');
         const btnMore = document.getElementById('btn-more');
         const twText = document.getElementById('typewriter-text');
         const msgCarta = `Mi amor, espero que hoy sea un día tan especial como tú lo eres para mí. Quería prepararte algo único y a tu medida. ❤️`;
-        let cIdx = 0, isTyping = false;
+        let cIdx = 0, isTyping = false, autoRedirectTimer, btnClicked = false;
 
         function typeWriter() { 
             if (cIdx < msgCarta.length) { 
                 twText.textContent += msgCarta.charAt(cIdx); cIdx++; setTimeout(typeWriter, 40); 
             } else {
                 btnMore.classList.add('visible'); typeButton();
+                autoRedirectTimer = setTimeout(() => {
+                    if (!btnClicked) {
+                        btnMore.click(); 
+                    }
+                }, 8000);
             }
         }
         function typeButton() { const txt = "¿Quieres ver más?"; if(btnMore.textContent.length < txt.length) { btnMore.textContent += txt.charAt(btnMore.textContent.length); setTimeout(typeButton, 80); } }
@@ -385,7 +404,7 @@
             }
         });
 
-        // 3. Modal del Ingeniero 3D (Animaciones CSS)
+        // 3. Modal de la Foto con Animaciones CSS
         function showEngineerModal(title, text, btnText, state, onClick, showTimer = false, showBtn = true) {
             document.getElementById('eng-title').innerText = title;
             document.getElementById('eng-text').innerHTML = text; 
@@ -400,7 +419,7 @@
             document.getElementById('eng-timer').style.display = showTimer ? 'block' : 'none';
             
             const imgEl = document.getElementById('img-engineer');
-            imgEl.className = 'eng-img'; // Reset classes
+            imgEl.className = 'eng-photo'; // Reset a la clase base
             
             if(state === 'meme_only') {
                 imgEl.style.display = 'none';
@@ -409,7 +428,6 @@
                 imgEl.style.display = 'inline-block';
                 document.getElementById('eng-title').style.display = 'block';
                 
-                // Asignar animaciones CSS según el estado
                 if(state === 'angry') imgEl.classList.add('anim-angry');
                 if(state === 'laughing') imgEl.classList.add('anim-laughing');
                 if(state === 'wink_tongue') imgEl.classList.add('anim-wink');
@@ -423,12 +441,17 @@
         }
 
         // 4. Navegación
-        btnMore.addEventListener('click', () => { document.getElementById('modal-question').classList.add('active'); });
+        btnMore.addEventListener('click', () => { 
+            btnClicked = true;
+            clearTimeout(autoRedirectTimer); // Cancelar la redirección automática si ya hizo clic
+            document.getElementById('modal-question').classList.add('active'); 
+        });
+        
         document.getElementById('btn-yes').addEventListener('click', () => { document.getElementById('modal-question').classList.remove('active'); switchToGame1(); });
         
         document.getElementById('btn-no').addEventListener('click', () => {
             document.getElementById('modal-question').classList.remove('active');
-            showEngineerModal('¡Necia por ahí no! 😠', 'A mí no me vas a saltar los juegos. Te aguantas.', '', 'angry', null, true, false);
+            showEngineerModal('¡Odiosa por ahí no! 😠', 'A mí no me vas a saltar los juegos. Te aguantas.', '', 'angry', null, true, false);
             let count = 7; let cdInt = setInterval(() => {
                 count--; document.getElementById('countdown').innerText = count;
                 if(count <= 0) { clearInterval(cdInt); hideEngineerModal(); switchToGame1(); }
@@ -506,10 +529,16 @@
                 cup.classList.add('lifted');
                 
                 if(i === winningCup) {
+                    // ¡Encontró la llave exitosamente!
                     keyItem.style.left = pos[cupIdx[i]];
                     keyItem.classList.remove('key-hidden');
-                    await sleep(2000);
-                    switchToGame2();
+                    await sleep(1500);
+                    
+                    let finalMsg = g1Errors > 0 
+                        ? 'Bueno... Parece que también eres buena en esto, vamos a ver si todavía te acuerdas cuando trabajamos juntos'
+                        : '¡Vea pues! a la primera, quien lo diria, vamos a ver si todavia te acuerdas de cuando trabajabamos juntos';
+
+                    showEngineerModal('¡Bien hecho! 🔑', finalMsg, 'Siguiente Reto', 'laughing', switchToGame2);
                 } else {
                     g1Errors++;
                     await sleep(600);
@@ -550,7 +579,12 @@
             } else {
                 g2Active = false; chestErrors++;
                 if(chestErrors === 1) {
-                    let memeHTML = `<img src="https://i.pinimg.com/736x/c0/89/95/c089958a0f85d975699a4ffba83bf74a.jpg" style="width: 100%; max-width: 250px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">`;
+                    let memeHTML = `
+                        <div style="font-size: 1.1rem; font-weight: bold; color: var(--rojo-oscuro); margin-bottom: 15px;">
+                            así que soy el único que se acuerda de esos tiempos
+                        </div>
+                        <img src="https://i.pinimg.com/736x/c0/89/95/c089958a0f85d975699a4ffba83bf74a.jpg" style="width: 100%; max-width: 250px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                    `;
                     showEngineerModal('', memeHTML, 'Intenta otra vez', 'meme_only', () => { g2Active = true; });
                 } else {
                     showEngineerModal('¡Ay no! 😤', '¡Yo lo hago entonces!', 'Dejar que el ingeniero lo haga', 'angry', async () => { await triggerWinSequence(); });
@@ -580,18 +614,16 @@
             document.getElementById('modal-win').classList.remove('active');
             document.getElementById('page-game2').style.display = 'none';
             
-            // Pantalla del ingeniero grande con animación de guiño CSS
             document.getElementById('page-engineer').style.display = 'flex';
+            
+            // Asigna animación al avatar final
             document.getElementById('img-big-engineer').classList.add('anim-wink');
 
             setTimeout(() => {
                 document.getElementById('page-engineer').style.display = 'none';
-                
-                // Ocultar decoración
                 document.getElementById('sky').style.display = 'none';
                 document.querySelectorAll('.border-decor').forEach(el => el.style.display = 'none');
                 
-                // Mostrar pantalla final
                 document.getElementById('page-final').style.display = 'flex';
             }, 4000);
         }
