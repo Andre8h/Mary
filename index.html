@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para ti ❤️</title>
+    <style>
+        /* =========================================
+           PALETA Y ESTILOS GLOBALES
+           ========================================= */
+        :root {
+            --rojo-sobre: #e11d48; --rojo-oscuro: #be123c;
+            --beige: #fffbeb; --rosado: #fbcfe8;
+            --blanco: #ffffff; --rojo-titulos: #dc2626;
+        }
+
+        body {
+            margin: 0; padding: 0; font-family: 'Georgia', serif;
+            background: linear-gradient(to bottom, #87CEEB 0%, #fbcfe8 100%);
+            overflow-x: hidden; min-height: 100vh;
+        }
+
+        /* Elementos de fondo */
+        .sky-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -10; pointer-events: none; overflow: hidden; }
+        .cloud { position: absolute; background: rgba(255, 255, 255, 0.8); border-radius: 50px; animation: moveClouds linear infinite; }
+        .cloud::before, .cloud::after { content: ''; position: absolute; background: rgba(255, 255, 255, 0.8); border-radius: 50%; }
+        .cloud1 { width: 100px; height: 30px; top: 10%; left: -20%; animation-duration: 25s; }
+        .cloud1::before { width: 50px; height: 50px; top: -25px; left: 15px; } .cloud1::after { width: 40px; height: 40px; top: -15px; left: 50px; }
+        .cloud2 { width: 120px; height: 40px; top: 30%; left: -30%; animation-duration: 35s; animation-delay: 5s;}
+        .cloud2::before { width: 60px; height: 60px; top: -30px; left: 20px; } .cloud2::after { width: 50px; height: 50px; top: -20px; left: 60px; }
+        @keyframes moveClouds { 0% { transform: translateX(-150px); } 100% { transform: translateX(110vw); } }
+        
+        .flying-animal { position: absolute; font-size: 3rem; animation: flyPath 20s linear infinite; filter: drop-shadow(0px 0px 8px rgba(59, 130, 246, 0.8)); z-index: 0; }
+        @keyframes flyPath { 0% { top: 80%; left: -10%; transform: scaleX(1) translateY(0) rotate(15deg); } 50% { top: 20%; left: 110%; transform: scaleX(1) translateY(0) rotate(15deg); } 51% { top: 20%; left: 110%; transform: scaleX(-1) translateY(0) rotate(15deg); } 100% { top: 80%; left: -10%; transform: scaleX(-1) translateY(0) rotate(15deg); } }
+        
+        .balloon { position: absolute; font-size: 4rem; animation: floatBalloon linear infinite; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2)); bottom: -20%; }
+        .b1 { left: 15%; animation-duration: 18s; } .b2 { left: 75%; animation-duration: 22s; animation-delay: 4s; transform: scale(1.2); } .b3 { left: 45%; animation-duration: 16s; animation-delay: 8s; transform: scale(0.8); }
+        @keyframes floatBalloon { 0% { bottom: -20%; transform: translateX(0) rotate(-5deg); } 50% { transform: translateX(30px) rotate(5deg); } 100% { bottom: 120%; transform: translateX(-30px) rotate(-5deg); } }
+        
+        .bg-confetti { position: absolute; width: 8px; height: 16px; animation: fallConfetti linear infinite; opacity: 0.7; }
+        @keyframes fallConfetti { 0% { top: -10%; transform: rotateZ(0deg) rotateX(0deg); } 100% { top: 110%; transform: rotateZ(360deg) rotateX(360deg); } }
+        
+        .border-decor { position: fixed; font-size: 3rem; z-index: 100; pointer-events: none; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3)); }
+        .tl { top: 10px; left: 10px; } .tr { top: 10px; right: 10px; transform: scaleX(-1); }
+        .bl { bottom: 10px; left: 10px; } .br { bottom: 10px; right: 10px; transform: scaleX(-1); }
+
+        /* =========================================
+           PANTALLA 1: EL SOBRE / TARJETA
+           ========================================= */
+        #page-index { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; position: relative; perspective: 1200px; transition: opacity 0.5s; }
+        .banner { background-color: var(--blanco); color: var(--rojo-titulos); padding: 10px 25px; border-radius: 20px; font-weight: bold; font-size: 1.2rem; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); animation: flotar 2s infinite ease-in-out; position: absolute; top: 12%; z-index: 20; transition: opacity 0.3s; }
+        @keyframes flotar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        
+        .card-container { position: relative; margin-top: 50px; cursor: pointer; transition: transform 1s ease; }
+        .card { width: 320px; height: 420px; position: relative; transform-style: preserve-3d; }
+        .card-container.open { transform: translateX(80px); }
+        .card-cover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform-origin: left; transform-style: preserve-3d; transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); z-index: 5; }
+        .card-container.open .card-cover { transform: rotateY(-140deg); }
+        .card-front, .card-back-cover { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 10px; box-shadow: 2px 5px 15px rgba(0,0,0,0.3); border: 2px solid #fda4af; box-sizing: border-box; }
+        .card-front { background: linear-gradient(135deg, var(--rojo-sobre), var(--rojo-oscuro)); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; }
+        .card-front h1 { font-size: 2rem; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .card-front p { font-size: 1.2rem; font-style: italic; opacity: 0.9; }
+        .card-back-cover { background: var(--rosado); transform: rotateY(180deg); display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+        
+        .card-inside { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--beige); border-radius: 10px; box-shadow: inset 0 0 20px rgba(0,0,0,0.05), 2px 5px 15px rgba(0,0,0,0.1); z-index: 1; padding: 30px 20px; box-sizing: border-box; border: 1px solid #fca5a5; }
+        .card-inside h3 { color: var(--rojo-titulos); text-align: center; margin-top: 0; border-bottom: 2px dashed #f9a8d4; padding-bottom: 10px; font-size: 22px; }
+        #typewriter-text { color: #333; font-size: 15px; text-align: justify; line-height: 1.6; white-space: pre-wrap; display: inline; }
+        .cursor { display: inline-block; width: 2px; background-color: #333; animation: blink 0.8s infinite; }
+        
+        #btn-more { margin-top: 50px; background-color: var(--blanco); color: var(--rojo-titulos); border: 2px solid var(--rojo-titulos); padding: 12px 30px; font-size: 1.1rem; font-weight: bold; border-radius: 30px; cursor: pointer; opacity: 0; pointer-events: none; transition: all 0.5s ease; transform: translateY(20px); z-index: 15; position: relative; }
+        #btn-more.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        #btn-more:hover { background-color: var(--rojo-titulos); color: var(--blanco); }
+
+        /* =========================================
+           SISTEMA DE MODALES E IMAGEN 3D
+           ========================================= */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(3px); }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-box { background: white; padding: 30px; border-radius: 15px; text-align: center; max-width: 90%; width: 350px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transform: scale(0.8); transition: transform 0.3s; border: 4px solid var(--rojo-titulos); box-sizing: border-box; }
+        .modal-overlay.active .modal-box { transform: scale(1); }
+        
+        .modal-box h2 { color: var(--rojo-titulos); margin-top: 0; }
+        .modal-box p { font-size: 1.1rem; color: #333; line-height: 1.5; white-space: pre-wrap; margin-bottom: 15px; }
+        .btn-group { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
+        .btn { padding: 10px 20px; border: none; border-radius: 20px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: 0.2s; }
+        .btn-yes { background: #10b981; color: white; } .btn-yes:hover { background: #059669; }
+        .btn-no { background: #ef4444; color: white; } .btn-no:hover { background: #dc2626; }
+        .btn-primary { background: var(--rojo-titulos); color: white; margin-top: 15px; display: inline-block; }
+        
+        /* ESTILOS Y ANIMACIONES DEL INGENIERO 3D */
+        .eng-img { 
+            width: 120px; height: 120px; object-fit: contain; background: #fdf2f8; 
+            border-radius: 50%; border: 3px solid #f9a8d4; margin-bottom: 10px; transition: all 0.3s;
+        }
+        .eng-img.big { 
+            width: 220px; height: 220px; background: transparent; border: none; border-radius: 0; filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.3)); 
+        }
+        .anim-angry { animation: shake 0.4s infinite; }
+        .anim-laughing { animation: bounce 0.5s infinite; }
+        .anim-wink { animation: winkTilt 1.5s infinite; }
+
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes winkTilt { 0%, 100% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(10deg) scale(1.05); } }
+
+        /* =========================================
+           PANTALLA 2: EL TRILE (JUEGO 1)
+           ========================================= */
+        #page-game1 { display: none; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; position: relative; z-index: 10; width: 100vw;}
+        .game-panel { background: rgba(255, 255, 255, 0.95); padding: 40px 20px; border-radius: 20px; width: 90%; max-width: 600px; text-align: center; box-shadow: 0 15px 30px rgba(0,0,0,0.2); border: 5px dashed var(--rojo-titulos); position: relative; overflow: hidden; box-sizing: border-box;}
+        
+        .game-title { color: var(--rojo-oscuro); font-size: 2rem; margin-bottom: 10px; opacity: 0; transition: opacity 0.5s ease-in-out; }
+        #game1-subtitle { color: #666; margin-bottom: 20px; opacity: 0; transition: opacity 0.5s ease-in-out; font-weight: bold; font-style: italic; }
+
+        #big-announcement {
+            position: absolute; top: 35%; left: 50%; transform: translate(-50%, -50%) scale(0);
+            font-size: 2.5rem; color: #ff69b4; text-shadow: 0 0 10px white, 2px 2px 5px rgba(0,0,0,0.4);
+            font-weight: bold; opacity: 0; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); z-index: 100; width: 100%; pointer-events: none;
+        }
+        #big-announcement.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+        .table { position: relative; width: 100%; height: 200px; margin-top: 20px; border-bottom: 10px solid #8B4513; }
+        .key-item { position: absolute; font-size: 3rem; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 1; transition: all 0.6s ease-in-out; }
+        .key-zoomed { transform: translateX(-50%) scale(4) translateY(-15px) !important; z-index: 50 !important; }
+        .key-hidden { opacity: 0 !important; z-index: -1 !important; }
+        .cup { width: 70px; height: 90px; background: linear-gradient(to right, #dc2626, #9f1239); position: absolute; bottom: 150px; transform: translateX(-50%); z-index: 5; transition: left 0.85s ease-in-out, bottom 0.5s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border-radius: 5px 5px 15px 15px; border-bottom: 15px solid #b91c1c; }
+        .cup.lifted { bottom: 80px !important; }
+
+        /* =========================================
+           PANTALLA 3: LOS BAÚLES (JUEGO 2)
+           ========================================= */
+        #page-game2 { display: none; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; position: relative; z-index: 10; width: 100vw;}
+        #typewriter-question { font-size: 1.5rem; font-weight: bold; color: var(--rojo-oscuro); min-height: 60px; margin-bottom: 30px; padding: 0 20px; }
+        
+        .chests-container { display: flex; justify-content: center; gap: 30px; margin-top: 30px; position: relative; }
+        .chest-wrapper { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.2s; }
+        .chest-wrapper:hover { transform: scale(1.1); }
+        .chest-box { width: 80px; height: 55px; background: linear-gradient(to bottom, #8B4513, #5c2900); border: 2px solid #3e1b00; border-radius: 5px; position: relative; box-shadow: inset 0 -5px 10px rgba(0,0,0,0.5), 0 5px 10px rgba(0,0,0,0.3); display: flex; justify-content: center; align-items: center; }
+        .emoji-hint { position: absolute; font-size: 2rem; z-index: 10; text-shadow: 0px 0px 8px rgba(255,255,255,0.8); pointer-events: none; transition: opacity 0.3s; top: -5px; }
+        .chest-lid { position: absolute; top: -30px; left: -2px; width: 80px; height: 30px; background: linear-gradient(to bottom, #A0522D, #8B4513); border: 2px solid #3e1b00; border-radius: 40px 40px 0 0; transform-origin: bottom; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: inset 0 5px 10px rgba(255,255,255,0.2); z-index: 5;}
+        .chest-lock { position: absolute; top: -8px; left: 35px; width: 10px; height: 15px; background: gold; border-radius: 5px; border: 1px solid #b8860b; z-index: 15; transition: opacity 0.2s; }
+        .chest-wrapper.open .chest-lid { transform: rotateX(150deg); z-index: 1; }
+        .chest-wrapper.open .chest-lock { opacity: 0; }
+        .chest-wrapper.open .emoji-hint { opacity: 0; }
+
+        #flying-key { position: absolute; font-size: 3rem; bottom: -50px; left: 50%; transform: translateX(-50%); opacity: 0; transition: all 1s ease-in-out; z-index: 100; pointer-events: none; }
+
+        .party-details { background: #ffe4e6; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 5px solid var(--rojo-titulos); text-align: left; }
+        .burst-confetti { position: fixed; width: 10px; height: 10px; z-index: 1000; pointer-events: none; animation: explode 1.5s ease-out forwards; }
+        @keyframes explode { 0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; } 100% { transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0.5); opacity: 0; } }
+
+        /* =========================================
+           PANTALLAS FINALES (INGENIERO Y NEGRO)
+           ========================================= */
+        #page-engineer { display: none; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; position: relative; z-index: 50; width: 100vw; }
+        .speech-bubble {
+            background: white; border-radius: 20px; padding: 15px 30px; font-size: 1.8rem; font-weight: bold; color: var(--rojo-titulos);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); position: relative; margin-bottom: 30px; animation: popIn 0.5s cubic-bezier(0.4,0,0.2,1);
+            text-align: center; max-width: 90%; box-sizing: border-box;
+        }
+        .speech-bubble::after {
+            content: ''; position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%);
+            border-width: 15px 15px 0; border-style: solid; border-color: white transparent transparent transparent;
+        }
+        @keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
+
+        #page-final {
+            display: none; flex-direction: column; justify-content: center; align-items: center; height: 100vh; width: 100vw;
+            background: black; color: white; position: fixed; top: 0; left: 0; z-index: 9999;
+        }
+        .fade-in-text { font-size: 2.5rem; text-align: center; opacity: 0; animation: fadeIn 3s forwards; font-style: italic; padding: 0 20px; box-sizing: border-box;}
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        /* =========================================
+           RESPONSIVE - PARA iPHONE / MÓVILES
+           ========================================= */
+        @media (max-width: 480px) {
+            .card { width: 280px; height: 380px; }
+            .card-container.open { transform: translateX(15px); }
+            .card-inside { padding: 25px 15px; }
+            #typewriter-text { font-size: 14px; }
+            
+            .game-panel { padding: 25px 15px; width: 95%; border-width: 3px; }
+            .game-title { font-size: 1.5rem; }
+            #game1-subtitle { font-size: 0.9rem; margin-bottom: 10px; }
+            #big-announcement { font-size: 1.8rem; }
+            
+            /* Vasos en móvil */
+            .table { height: 160px; margin-top: 30px; border-bottom-width: 7px; }
+            .cup { width: 55px; height: 75px; bottom: 120px; border-bottom-width: 10px; border-radius: 5px 5px 10px 10px;}
+            .cup.lifted { bottom: 65px !important; }
+            .key-item { font-size: 2.2rem; bottom: 15px; }
+            .key-zoomed { transform: translateX(-50%) scale(3) translateY(-10px) !important; }
+            
+            /* Baúles en móvil */
+            .chests-container { gap: 15px; margin-top: 20px; }
+            .chest-box { width: 65px; height: 45px; }
+            .chest-lid { width: 65px; height: 25px; top: -25px; }
+            .chest-lock { left: 27px; top: -6px; width: 8px; height: 12px; }
+            .emoji-hint { font-size: 1.5rem; top: -3px; }
+            #flying-key { font-size: 2.2rem; }
+            #typewriter-question { font-size: 1.2rem; padding: 0 10px; }
+            
+            /* Modales y Final */
+            .modal-box { width: 290px; padding: 20px; }
+            .btn { padding: 8px 16px; font-size: 0.9rem; }
+            .party-details { font-size: 0.9rem; padding: 10px; }
+            .eng-img { width: 90px; height: 90px; }
+            .eng-img.big { width: 160px; height: 160px; }
+            .speech-bubble { font-size: 1.3rem; padding: 12px 20px; }
+            .fade-in-text { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- FONDO -->
+    <div class="sky-background" id="sky">
+        <div class="cloud cloud1"></div><div class="cloud cloud2"></div>
+        <div class="flying-animal">🦋</div>
+        <div class="balloon b1">🎈</div><div class="balloon b2">🎈</div><div class="balloon b3">🎈</div>
+    </div>
+    <div class="border-decor tl">🌸</div><div class="border-decor tr">🌸</div>
+    <div class="border-decor bl">👑</div><div class="border-decor br">👑</div>
+
+    <!-- ================= PANTALLA 1: EL SOBRE ================= -->
+    <section id="page-index">
+        <div class="banner" id="banner-click">¡Dame click! 👇</div>
+        <div class="card-container" id="card-container">
+            <div class="card">
+                <div class="card-cover">
+                    <div class="card-front"><h1>Para ti ❤️</h1><p>Toca para abrir ✨</p></div>
+                    <div class="card-back-cover">🎉</div>
+                </div>
+                <div class="card-inside">
+                    <h3>¡Feliz Cumpleaños!</h3>
+                    <span id="typewriter-text"></span><span class="cursor" id="cursor">&nbsp;</span>
+                </div>
+            </div>
+        </div>
+        <button id="btn-more"></button>
+    </section>
+
+    <!-- ================= PANTALLA 2: JUEGO DE VASOS ================= -->
+    <section id="page-game1">
+        <div class="game-panel">
+            <div id="big-announcement">¡Puedes encontrar la llave!</div>
+            <h2 class="game-title" id="game1-title">¿Dónde está la llave? 🔑</h2>
+            <p id="game1-subtitle">¡No le quites el ojo de encima!</p>
+            
+            <div class="table" id="game-table">
+                <div class="key-item" id="game-key">🔑</div>
+                <div class="cup" id="cup-0" style="left: 20%;"></div>
+                <div class="cup" id="cup-1" style="left: 50%;"></div>
+                <div class="cup" id="cup-2" style="left: 80%;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= PANTALLA 3: LOS BAÚLES ================= -->
+    <section id="page-game2">
+        <div class="game-panel">
+            <h2 class="game-title" style="opacity: 1;">Último Reto 🧠</h2>
+            <div id="typewriter-question"></div>
+            
+            <div class="chests-container" id="chests-container">
+                <div class="chest-wrapper" id="chest-0" onclick="checkChest(0)">
+                    <div class="chest-box">
+                        <div class="emoji-hint">🚀</div>
+                        <div class="chest-lid"></div><div class="chest-lock"></div>
+                    </div>
+                </div>
+                <div class="chest-wrapper" id="chest-1" onclick="checkChest(1)">
+                    <div class="chest-box">
+                        <div class="emoji-hint">☠️</div>
+                        <div class="chest-lid"></div><div class="chest-lock"></div>
+                    </div>
+                </div>
+                <div class="chest-wrapper" id="chest-2" onclick="checkChest(2)">
+                    <div class="chest-box">
+                        <div class="emoji-hint">🤡</div>
+                        <div class="chest-lid"></div><div class="chest-lock"></div>
+                    </div>
+                </div>
+                <div id="flying-key">🔑</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= PANTALLA 4: INGENIERO ANIMADO ================= -->
+    <section id="page-engineer">
+        <div class="speech-bubble">¿Así o más especial? 😉</div>
+        <img id="img-big-engineer" src="https://png.pngtree.com/png-clipart/20250217/original/pngtree-software-engineer-3d-icon-in-clean-design-isolated-on-white-background-png-image_20173911.png" alt="Ingeniero" class="eng-img big">
+    </section>
+
+    <!-- ================= PANTALLA 5: FINAL NEGRO ================= -->
+    <section id="page-final">
+        <h1 class="fade-in-text">Gracias por llegar a mi vida ❤️</h1>
+    </section>
+
+    <!-- ================= MODALES ================= -->
+    <div class="modal-overlay" id="modal-engineer">
+        <div class="modal-box">
+            <!-- AQUÍ ESTÁ LA NUEVA IMAGEN 3D DEL INGENIERO -->
+            <img id="img-engineer" src="https://png.pngtree.com/png-clipart/20250217/original/pngtree-software-engineer-3d-icon-in-clean-design-isolated-on-white-background-png-image_20173911.png" alt="Ingeniero" class="eng-img">
+            <h2 id="eng-title">Título</h2>
+            <div id="eng-text">Texto</div>
+            <button class="btn btn-primary" id="eng-btn">Botón</button>
+            <p id="eng-timer" style="font-size: 0.9rem; color: #666; display: none; margin-top: 10px;">Redirigiendo en <span id="countdown">7</span> s...</p>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-question">
+        <div class="modal-box">
+            <h2>¡Espera! 🛑</h2>
+            <p>Resuelve los retos y encuentra tu mensaje especial.</p>
+            <p>¿Estás lista?</p>
+            <div class="btn-group">
+                <button class="btn btn-yes" id="btn-yes">Sí, acepto el reto</button>
+                <button class="btn btn-no" id="btn-no">No, qué pereza</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-win">
+        <div class="modal-box" style="width: 400px;">
+            <h2>¡Felicidades! 🎉</h2>
+            <p>Eres la mejor resolviendo retos. Aquí tienes tu sorpresa:</p>
+            <div class="party-details">
+                <strong>📍 Lugar:</strong> [Lugar Especial]<br><br>
+                <strong>🕒 Hora:</strong> [8:00 PM]<br><br>
+                <strong>👗 Código de vestimenta:</strong> Hermosa como siempre<br><br>
+                <em>¡Prepárate para una noche increíble! Te amo. ❤️</em>
+            </div>
+            <button class="btn btn-primary" onclick="goToEndSequence();">¡Celebrar! 🥳</button>
+        </div>
+    </div>
+
+    <!-- ================= SCRIPTS ================= -->
+    <script>
+        const sleep = ms => new Promise(res => setTimeout(res, ms));
+
+        // 1. Confeti
+        const sky = document.getElementById('sky');
+        const colors = ['#f43f5e', '#3b82f6', '#fbbf24', '#10b981', '#a855f7'];
+        for (let i = 0; i < 25; i++) {
+            let conf = document.createElement('div'); conf.className = 'bg-confetti';
+            conf.style.left = Math.random() * 100 + 'vw'; conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            conf.style.animationDuration = (Math.random() * 3 + 4) + 's'; conf.style.animationDelay = Math.random() * 5 + 's';
+            sky.appendChild(conf);
+        }
+
+        function fireConfettiBurst() {
+            for(let i=0; i<60; i++) {
+                let burst = document.createElement('div'); burst.className = 'burst-confetti';
+                burst.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                burst.style.left = '50vw'; burst.style.top = '50vh';
+                let tx = (Math.random() - 0.5) * window.innerWidth; let ty = (Math.random() - 1) * window.innerHeight; let rot = Math.random() * 720;
+                burst.style.setProperty('--tx', `${tx}px`); burst.style.setProperty('--ty', `${ty}px`); burst.style.setProperty('--rot', `${rot}deg`);
+                document.body.appendChild(burst); setTimeout(() => burst.remove(), 1500);
+            }
+        }
+
+        // 2. Tarjeta Inicial 
+        const cardContainer = document.getElementById('card-container');
+        const btnMore = document.getElementById('btn-more');
+        const twText = document.getElementById('typewriter-text');
+        const msgCarta = `Mi amor, espero que hoy sea un día tan especial como tú lo eres para mí. Quería prepararte algo único y a tu medida. ❤️`;
+        let cIdx = 0, isTyping = false;
+
+        function typeWriter() { 
+            if (cIdx < msgCarta.length) { 
+                twText.textContent += msgCarta.charAt(cIdx); cIdx++; setTimeout(typeWriter, 40); 
+            } else {
+                btnMore.classList.add('visible'); typeButton();
+            }
+        }
+        function typeButton() { const txt = "¿Quieres ver más?"; if(btnMore.textContent.length < txt.length) { btnMore.textContent += txt.charAt(btnMore.textContent.length); setTimeout(typeButton, 80); } }
+
+        cardContainer.addEventListener('click', () => {
+            if(!cardContainer.classList.contains('open')) {
+                cardContainer.classList.add('open'); document.getElementById('banner-click').style.opacity = '0';
+                fireConfettiBurst();
+                setTimeout(() => { if (!isTyping) { isTyping = true; typeWriter(); } }, 1000);
+            }
+        });
+
+        // 3. Modal del Ingeniero 3D (Animaciones CSS)
+        function showEngineerModal(title, text, btnText, state, onClick, showTimer = false, showBtn = true) {
+            document.getElementById('eng-title').innerText = title;
+            document.getElementById('eng-text').innerHTML = text; 
+            
+            const btn = document.getElementById('eng-btn');
+            btn.style.display = showBtn ? 'inline-block' : 'none'; 
+            btn.innerText = btnText;
+            
+            const newBtn = btn.cloneNode(true); btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', () => { hideEngineerModal(); if(onClick) onClick(); });
+            
+            document.getElementById('eng-timer').style.display = showTimer ? 'block' : 'none';
+            
+            const imgEl = document.getElementById('img-engineer');
+            imgEl.className = 'eng-img'; // Reset classes
+            
+            if(state === 'meme_only') {
+                imgEl.style.display = 'none';
+                document.getElementById('eng-title').style.display = 'none';
+            } else {
+                imgEl.style.display = 'inline-block';
+                document.getElementById('eng-title').style.display = 'block';
+                
+                // Asignar animaciones CSS según el estado
+                if(state === 'angry') imgEl.classList.add('anim-angry');
+                if(state === 'laughing') imgEl.classList.add('anim-laughing');
+                if(state === 'wink_tongue') imgEl.classList.add('anim-wink');
+            }
+
+            document.getElementById('modal-engineer').classList.add('active');
+        }
+        
+        function hideEngineerModal() {
+            document.getElementById('modal-engineer').classList.remove('active');
+        }
+
+        // 4. Navegación
+        btnMore.addEventListener('click', () => { document.getElementById('modal-question').classList.add('active'); });
+        document.getElementById('btn-yes').addEventListener('click', () => { document.getElementById('modal-question').classList.remove('active'); switchToGame1(); });
+        
+        document.getElementById('btn-no').addEventListener('click', () => {
+            document.getElementById('modal-question').classList.remove('active');
+            showEngineerModal('¡Necia por ahí no! 😠', 'A mí no me vas a saltar los juegos. Te aguantas.', '', 'angry', null, true, false);
+            let count = 7; let cdInt = setInterval(() => {
+                count--; document.getElementById('countdown').innerText = count;
+                if(count <= 0) { clearInterval(cdInt); hideEngineerModal(); switchToGame1(); }
+            }, 1000);
+        });
+
+        function switchToGame1() {
+            document.getElementById('page-index').style.display = 'none';
+            document.getElementById('page-game1').style.display = 'flex';
+            setTimeout(startGame1, 500);
+        }
+
+        // ==========================================
+        // 5. JUEGO 1: LOS VASOS
+        // ==========================================
+        const cups = [document.getElementById('cup-0'), document.getElementById('cup-1'), document.getElementById('cup-2')];
+        const keyItem = document.getElementById('game-key');
+        const bigAnnounce = document.getElementById('big-announcement');
+        const g1Subtitle = document.getElementById('game1-subtitle');
+        const g1Title = document.getElementById('game1-title');
+        const pos = ['20%', '50%', '80%'];
+        
+        let cupIdx = [0, 1, 2], winningCup = 1, g1Active = false, g1Errors = 0;
+
+        async function startGame1() {
+            g1Active = false;
+            g1Subtitle.style.opacity = '0'; 
+            g1Title.style.opacity = '0';
+
+            cupIdx = [0, 1, 2];
+            cups[0].style.left = pos[0];
+            cups[1].style.left = pos[1];
+            cups[2].style.left = pos[2];
+            
+            cups.forEach(c => { c.style.bottom = '150px'; c.classList.remove('lifted'); });
+            
+            keyItem.className = 'key-item key-zoomed';
+            keyItem.style.left = '50%';
+            bigAnnounce.classList.add('show');
+            
+            await sleep(2500);
+            
+            bigAnnounce.classList.remove('show');
+            keyItem.className = 'key-item';
+            await sleep(800);
+            
+            cups.forEach(c => c.style.bottom = '0px'); 
+            await sleep(600);
+            
+            keyItem.classList.add('key-hidden');
+            await sleep(300);
+            
+            g1Title.style.opacity = '1';
+            g1Subtitle.style.opacity = '1';
+            
+            await shuffleCups();
+            g1Active = true;
+        }
+
+        async function shuffleCups() {
+            for(let i=0; i<4; i++) {
+                let p1 = Math.floor(Math.random() * 3), p2 = Math.floor(Math.random() * 3);
+                while(p1 === p2) p2 = Math.floor(Math.random() * 3);
+                let c1 = cupIdx.indexOf(p1), c2 = cupIdx.indexOf(p2);
+                cups[c1].style.left = pos[p2]; cups[c2].style.left = pos[p1];
+                cupIdx[c1] = p2; cupIdx[c2] = p1;
+                await sleep(850); 
+            }
+        }
+
+        cups.forEach((cup, i) => {
+            cup.addEventListener('click', async () => {
+                if(!g1Active) return;
+                g1Active = false;
+                cup.classList.add('lifted');
+                
+                if(i === winningCup) {
+                    keyItem.style.left = pos[cupIdx[i]];
+                    keyItem.classList.remove('key-hidden');
+                    await sleep(2000);
+                    switchToGame2();
+                } else {
+                    g1Errors++;
+                    await sleep(600);
+                    cup.classList.remove('lifted');
+                    
+                    if (g1Errors === 1) {
+                        showEngineerModal('¡Fallaste! ❌', 'Pensé que eras buena en juegos, pero veo que solo en el parchís... 😂', 'Volver a intentar', 'laughing', startGame1);
+                    } else if (g1Errors === 2) {
+                        showEngineerModal('¡Ay Dios! 😜', '¡Vea usted, menos mal que te deje ganar en el parchís!', 'Intentar otra vez', 'wink_tongue', startGame1);
+                    } else {
+                        showEngineerModal('¡No puede ser! 📸', 'Envía captura de pantalla para reírme', 'Ok, reintentar...', 'laughing', startGame1);
+                    }
+                }
+            });
+        });
+
+        // ==========================================
+        // 6. JUEGO 2: LOS BAÚLES DE ERNESTO
+        // ==========================================
+        let chestErrors = 0; let g2Active = false;
+
+        function switchToGame2() {
+            document.getElementById('page-game1').style.display = 'none';
+            document.getElementById('page-game2').style.display = 'flex';
+            
+            const qTxt = "¿ Con qué emoji nos dijo Ernesto que teníamos que ser proactivos ?";
+            const qEl = document.getElementById('typewriter-question');
+            let qIdx = 0;
+            function typeQ() { if(qIdx < qTxt.length) { qEl.textContent += qTxt.charAt(qIdx); qIdx++; setTimeout(typeQ, 50); } else { g2Active = true; } }
+            setTimeout(typeQ, 1000);
+        }
+
+        async function checkChest(idx) {
+            if(!g2Active) return;
+            
+            if(idx === 1) { 
+                g2Active = false; await triggerWinSequence();
+            } else {
+                g2Active = false; chestErrors++;
+                if(chestErrors === 1) {
+                    let memeHTML = `<img src="https://i.pinimg.com/736x/c0/89/95/c089958a0f85d975699a4ffba83bf74a.jpg" style="width: 100%; max-width: 250px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">`;
+                    showEngineerModal('', memeHTML, 'Intenta otra vez', 'meme_only', () => { g2Active = true; });
+                } else {
+                    showEngineerModal('¡Ay no! 😤', '¡Yo lo hago entonces!', 'Dejar que el ingeniero lo haga', 'angry', async () => { await triggerWinSequence(); });
+                }
+            }
+        }
+
+        async function triggerWinSequence() {
+            const flyingKey = document.getElementById('flying-key');
+            const targetChest = document.getElementById('chest-1');
+            
+            flyingKey.style.opacity = '1'; await sleep(500);
+            flyingKey.style.bottom = '100px'; flyingKey.style.transform = 'translateX(-50%) scale(0.5)';
+            await sleep(1000);
+            
+            flyingKey.style.opacity = '0'; targetChest.classList.add('open');
+            await sleep(800);
+            
+            document.getElementById('modal-win').classList.add('active');
+            fireConfettiBurst();
+        }
+
+        // ==========================================
+        // 7. TRANSICIÓN FINAL
+        // ==========================================
+        function goToEndSequence() {
+            document.getElementById('modal-win').classList.remove('active');
+            document.getElementById('page-game2').style.display = 'none';
+            
+            // Pantalla del ingeniero grande con animación de guiño CSS
+            document.getElementById('page-engineer').style.display = 'flex';
+            document.getElementById('img-big-engineer').classList.add('anim-wink');
+
+            setTimeout(() => {
+                document.getElementById('page-engineer').style.display = 'none';
+                
+                // Ocultar decoración
+                document.getElementById('sky').style.display = 'none';
+                document.querySelectorAll('.border-decor').forEach(el => el.style.display = 'none');
+                
+                // Mostrar pantalla final
+                document.getElementById('page-final').style.display = 'flex';
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
