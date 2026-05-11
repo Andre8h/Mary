@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>😊</title>
+    <title>Para ti ❤️</title>
     <style>
         /* =========================================
            PALETA Y ESTILOS GLOBALES
@@ -45,30 +45,78 @@
         .bl { bottom: 10px; left: 10px; } .br { bottom: 10px; right: 10px; transform: scaleX(-1); }
 
         /* =========================================
-           PANTALLA 1: EL SOBRE / TARJETA
+           PANTALLA 1: EL LIBRO 
            ========================================= */
-        #page-index { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; position: relative; perspective: 1200px; transition: opacity 0.5s; }
-        .banner { background-color: var(--blanco); color: var(--rojo-titulos); padding: 10px 25px; border-radius: 20px; font-weight: bold; font-size: 1.2rem; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); animation: flotar 2s infinite ease-in-out; position: absolute; top: 12%; z-index: 20; transition: opacity 0.3s; }
+        #page-index { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; position: relative; perspective: 1500px; transition: opacity 0.5s; padding: 20px;}
+        .banner { background-color: var(--blanco); color: var(--rojo-titulos); padding: 10px 25px; border-radius: 20px; font-weight: bold; font-size: 1.2rem; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); animation: flotar 2s infinite ease-in-out; position: absolute; top: 8%; z-index: 20; transition: opacity 0.3s; }
         @keyframes flotar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         
-        .card-container { position: relative; margin-top: 50px; cursor: pointer; transition: transform 1s ease; }
-        .card { width: 320px; height: 420px; position: relative; transform-style: preserve-3d; }
-        .card-container.open { transform: translateX(80px); }
-        .card-cover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform-origin: left; transform-style: preserve-3d; transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); z-index: 5; }
-        .card-container.open .card-cover { transform: rotateY(-140deg); }
-        .card-front, .card-back-cover { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 10px; box-shadow: 2px 5px 15px rgba(0,0,0,0.3); border: 2px solid #fda4af; box-sizing: border-box; }
-        .card-front { background: linear-gradient(135deg, var(--rojo-sobre), var(--rojo-oscuro)); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; }
-        .card-front h1 { font-size: 2rem; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
-        .card-front p { font-size: 1.2rem; font-style: italic; opacity: 0.9; }
-        .card-back-cover { background: var(--rosado); transform: rotateY(180deg); display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+        .book-container { position: relative; margin-top: 20px; cursor: pointer; transition: transform 1s ease; }
+        .book { width: 340px; height: 460px; position: relative; transform-style: preserve-3d; }
+        .book-container.open { transform: translateX(80px); }
+        .book-cover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform-origin: left; transform-style: preserve-3d; transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); z-index: 5; }
+        .book-container.open .book-cover { transform: rotateY(-140deg); }
         
-        .card-inside { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--beige); border-radius: 10px; box-shadow: inset 0 0 20px rgba(0,0,0,0.05), 2px 5px 15px rgba(0,0,0,0.1); z-index: 1; padding: 30px 20px; box-sizing: border-box; border: 1px solid #fca5a5; }
-        .card-inside h3 { color: var(--rojo-titulos); text-align: center; margin-top: 0; border-bottom: 2px dashed #f9a8d4; padding-bottom: 10px; font-size: 22px; }
-        #typewriter-text { color: #333; font-size: 15px; text-align: justify; line-height: 1.6; white-space: pre-wrap; display: inline; }
+        /* Tapa del Libro */
+        .book-front, .book-back-cover { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; box-sizing: border-box; }
+        .book-front { 
+            background: linear-gradient(135deg, #7f1d1d, #991b1b); 
+            border-left: 15px solid #450a0a; 
+            border-radius: 5px 15px 15px 5px; 
+            box-shadow: inset 4px 0 10px rgba(0,0,0,0.3), 5px 5px 15px rgba(0,0,0,0.4); 
+            border-top: 2px solid #b91c1c; border-right: 2px solid #b91c1c; border-bottom: 2px solid #b91c1c;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fbbf24; 
+            padding: 20px; text-align: center;
+        }
+        .book-front h1 { font-size: 2.2rem; margin-bottom: 10px; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); border-bottom: 2px solid #fbbf24; padding-bottom: 10px;}
+        .book-front p { font-size: 1.1rem; font-style: italic; opacity: 0.9; color: #fef08a;}
+        .book-back-cover { background: #450a0a; transform: rotateY(180deg); border-radius: 15px 5px 5px 15px; }
+        
+        /* Interior del Libro */
+        .book-inside { 
+            position: absolute; top: 4px; left: 0; width: 97%; height: 98%; 
+            background: #fffdf0; border-radius: 3px 12px 12px 3px; 
+            box-shadow: inset 15px 0 20px rgba(0,0,0,0.06), 3px 3px 0 #f3f4f6, 4px 4px 0 #9ca3af, 6px 6px 0 #f3f4f6, 7px 7px 0 #9ca3af; 
+            z-index: 1; padding: 25px 20px 25px 35px; box-sizing: border-box; border-left: 1px solid rgba(0,0,0,0.1); 
+            display: flex; flex-direction: column; 
+        }
+        #book-title { color: var(--rojo-titulos); text-align: center; margin-top: 0; border-bottom: 2px dashed #f9a8d4; padding-bottom: 10px; font-size: 22px; flex-shrink: 0;}
+        
+        /* Contenedor del texto (Margen inferior para dar espacio al botón Seguir) */
+        #text-container { 
+            flex-grow: 1; height: 0; 
+            width: 100%; position: relative; overflow: hidden; 
+            margin-top: 5px;
+            margin-bottom: 35px; /* Espacio reservado para el botón */
+        }
+
+        #typewriter-text { color: #333; font-size: 15px; text-align: justify; line-height: 1.6; white-space: pre-wrap; display: inline; font-family: 'Georgia', serif;}
         .cursor { display: inline-block; width: 2px; background-color: #333; animation: blink 0.8s infinite; }
-        
-        #btn-more { margin-top: 50px; background-color: var(--blanco); color: var(--rojo-titulos); border: 2px solid var(--rojo-titulos); padding: 12px 30px; font-size: 1.1rem; font-weight: bold; border-radius: 30px; cursor: pointer; opacity: 0; pointer-events: none; transition: all 0.5s ease; transform: translateY(20px); z-index: 15; position: relative; }
-        #btn-more.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        .page-turn-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: #fffdf0; opacity: 0; pointer-events: none; z-index: 10;
+            transition: opacity 0.6s ease-in-out;
+        }
+        .page-turning { opacity: 1; }
+
+        /* Botón de Paginación Interno (Corona) */
+        #btn-next-page {
+            position: absolute; bottom: 15px; right: 20px;
+            background-color: var(--blanco); color: var(--rojo-titulos);
+            border: 2px solid #fbbf24; padding: 6px 15px;
+            font-size: 1rem; font-weight: bold; border-radius: 20px;
+            cursor: pointer; opacity: 0; pointer-events: none;
+            transition: all 0.3s ease; z-index: 20; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        #btn-next-page.visible { opacity: 1; pointer-events: auto; animation: pulseBtn 1.5s infinite alternate; }
+        #btn-next-page:hover { background-color: #fbbf24; color: #450a0a; }
+        @keyframes pulseBtn { 0% { transform: scale(1); } 100% { transform: scale(1.08); } }
+
+        /* Botón Final fuera del libro */
+        #btn-more { position: absolute; bottom: -65px; left: 50%; transform: translateX(-50%); background-color: var(--blanco); color: var(--rojo-titulos); border: 2px solid var(--rojo-titulos); padding: 12px 30px; font-size: 1.1rem; font-weight: bold; border-radius: 30px; cursor: pointer; opacity: 0; pointer-events: none; transition: all 0.5s ease; z-index: 15; }
+        #btn-more.visible { opacity: 1; pointer-events: auto; bottom: -50px;}
         #btn-more:hover { background-color: var(--rojo-titulos); color: var(--blanco); }
 
         /* =========================================
@@ -90,25 +138,9 @@
         /* =========================================
            ESTILOS Y ANIMACIONES FOTO INGENIERO
            ========================================= */
-        .eng-photo { 
-            width: 120px; height: 120px; 
-            border-radius: 50%; 
-            object-fit: cover; 
-            border: 4px solid #f9a8d4; 
-            margin-bottom: 10px; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-            transition: all 0.3s;
-        }
-        
-        .eng-photo.big { 
-            width: 220px; height: 220px; 
-            border-width: 6px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3); 
-        }
-        
-        .anim-angry { animation: shake 0.4s infinite; }
-        .anim-laughing { animation: bounce 0.5s infinite; }
-        .anim-wink { animation: winkTilt 1.5s infinite; }
+        .eng-photo { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid #f9a8d4; margin-bottom: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.15); transition: all 0.3s; }
+        .eng-photo.big { width: 220px; height: 220px; border-width: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        .anim-angry { animation: shake 0.4s infinite; } .anim-laughing { animation: bounce 0.5s infinite; } .anim-wink { animation: winkTilt 1.5s infinite; }
 
         @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
@@ -117,18 +149,13 @@
         /* =========================================
            PANTALLA 2 Y 3: JUEGOS
            ========================================= */
-        #page-game1, #page-game2 { display: none; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; position: relative; z-index: 10; width: 100vw;}
+        #page-game1, #page-game2 { display: none; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; position: relative; z-index: 10; width: 100vw; overflow: hidden;}
         .game-panel { background: rgba(255, 255, 255, 0.95); padding: 40px 20px; border-radius: 20px; width: 90%; max-width: 600px; text-align: center; box-shadow: 0 15px 30px rgba(0,0,0,0.2); border: 5px dashed var(--rojo-titulos); position: relative; overflow: hidden; box-sizing: border-box;}
         
         .game-title { color: var(--rojo-oscuro); font-size: 2rem; margin-bottom: 10px; opacity: 0; transition: opacity 0.5s ease-in-out; }
         #game1-subtitle { color: #666; margin-bottom: 20px; opacity: 0; transition: opacity 0.5s ease-in-out; font-weight: bold; font-style: italic; }
 
-        /* TEXTO GIGANTE Y LLAVE (NEGRO) */
-        #big-announcement { 
-            position: absolute; top: 35%; left: 50%; transform: translate(-50%, -50%) scale(0); 
-            font-size: 2.5rem; color: #000000; text-shadow: 0 0 15px rgba(255, 255, 255, 1), 0 0 5px rgba(255, 255, 255, 0.8); 
-            font-weight: bold; opacity: 0; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); z-index: 100; width: 100%; pointer-events: none; 
-        }
+        #big-announcement { position: absolute; top: 35%; left: 50%; transform: translate(-50%, -50%) scale(0); font-size: 2.5rem; color: #000000; text-shadow: 0 0 15px rgba(255, 255, 255, 1), 0 0 5px rgba(255, 255, 255, 0.8); font-weight: bold; opacity: 0; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); z-index: 100; width: 100%; pointer-events: none; }
         #big-announcement.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 
         .table { position: relative; width: 100%; height: 200px; margin-top: 20px; border-bottom: 10px solid #8B4513; }
@@ -157,47 +184,41 @@
         @keyframes explode { 0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; } 100% { transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0.5); opacity: 0; } }
 
         #page-engineer { display: none; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; position: relative; z-index: 50; width: 100vw; }
-        .speech-bubble {
-            background: white; border-radius: 20px; padding: 15px 30px; font-size: 1.8rem; font-weight: bold; color: var(--rojo-titulos);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2); position: relative; margin-bottom: 30px; animation: popIn 0.5s cubic-bezier(0.4,0,0.2,1);
-            text-align: center; max-width: 90%; box-sizing: border-box;
-        }
+        .speech-bubble { background: white; border-radius: 20px; padding: 15px 30px; font-size: 1.8rem; font-weight: bold; color: var(--rojo-titulos); box-shadow: 0 5px 15px rgba(0,0,0,0.2); position: relative; margin-bottom: 30px; animation: popIn 0.5s cubic-bezier(0.4,0,0.2,1); text-align: center; max-width: 90%; box-sizing: border-box; }
         .speech-bubble::after { content: ''; position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); border-width: 15px 15px 0; border-style: solid; border-color: white transparent transparent transparent; }
         @keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
 
         /* =========================================
            PANTALLA FINAL Y RETRASOS
            ========================================= */
-        #page-final { display: none; flex-direction: column; justify-content: center; align-items: center; height: 100vh; width: 100vw; background: black; color: white; position: fixed; top: 0; left: 0; z-index: 9999; }
+        #page-final { display: none; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; width: 100vw; background: black; color: white; position: fixed; top: 0; left: 0; z-index: 9999; overflow-y: auto; padding: 20px; box-sizing: border-box;}
         .fade-in-text { font-size: 2.5rem; text-align: center; opacity: 0; animation: fadeIn 3s forwards; font-style: italic; padding: 0 20px; box-sizing: border-box; margin-bottom: 10px;}
-        
         .fade-in-delayed-text { font-size: 1.8rem; text-align: center; opacity: 0; animation: fadeIn 2s forwards; animation-delay: 4s; margin-top: 20px; color: #fbcfe8; font-weight: bold; }
         .fade-in-delayed-img { opacity: 0; animation: fadeIn 2s forwards; animation-delay: 4.5s; margin-top: 20px; border-radius: 15px; max-width: 90%; width: 280px; box-shadow: 0 5px 15px rgba(255,255,255,0.2); }
-
         @keyframes fadeIn { to { opacity: 1; } }
 
         /* =========================================
-           RESPONSIVE - PARA iPHONE / MÓVILES
+           RESPONSIVE - CELULARES VERTICALES (Portrait)
            ========================================= */
-        @media (max-width: 480px) {
-            .card { width: 280px; height: 380px; }
-            .card-container.open { transform: translateX(15px); }
-            .card-inside { padding: 25px 15px; }
+        @media (max-width: 480px) and (orientation: portrait) {
+            .book { width: 290px; height: 420px; }
+            .book-container.open { transform: translateX(20px); }
+            .book-inside { padding: 20px 15px 20px 25px; }
+            #text-container { margin-bottom: 30px; }
             #typewriter-text { font-size: 14px; }
+            #btn-next-page { bottom: 10px; right: 15px; padding: 5px 12px; font-size: 0.9rem; }
             
             .game-panel { padding: 25px 15px; width: 95%; border-width: 3px; }
             .game-title { font-size: 1.5rem; }
             #game1-subtitle { font-size: 0.9rem; margin-bottom: 10px; }
             #big-announcement { font-size: 1.8rem; }
             
-            /* Vasos en móvil */
             .table { height: 160px; margin-top: 30px; border-bottom-width: 7px; }
             .cup { width: 55px; height: 75px; bottom: 120px; border-bottom-width: 10px; border-radius: 5px 5px 10px 10px;}
             .cup.lifted { bottom: 65px !important; }
             .key-item { font-size: 2.2rem; bottom: 15px; }
             .key-zoomed { transform: translateX(-50%) scale(3) translateY(-10px) !important; }
             
-            /* Baúles en móvil */
             .chests-container { gap: 15px; margin-top: 20px; }
             .chest-box { width: 65px; height: 45px; }
             .chest-lid { width: 65px; height: 25px; top: -25px; }
@@ -206,20 +227,61 @@
             #flying-key { font-size: 2.2rem; }
             #typewriter-question { font-size: 1.2rem; padding: 0 10px; }
             
-            /* Modales y Foto Móvil */
             .modal-box { width: 290px; padding: 20px; }
             .btn { padding: 8px 16px; font-size: 0.9rem; }
             .party-details { font-size: 0.9rem; padding: 10px; }
-            
-            /* Escala de la foto en celulares */
             .eng-photo { width: 100px; height: 100px; }
             .eng-photo.big { width: 180px; height: 180px; }
-            
             .speech-bubble { font-size: 1.3rem; padding: 12px 20px; }
             .fade-in-text { font-size: 1.8rem; }
-            
             .fade-in-delayed-text { font-size: 1.3rem; margin-top: 15px; }
             .fade-in-delayed-img { width: 220px; margin-top: 15px; }
+        }
+
+        /* =========================================
+           RESPONSIVE - CELULARES HORIZONTALES (Landscape)
+           ========================================= */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .book { width: 440px; height: 260px; }
+            .book-container.open { transform: translateX(60px); }
+            .book-inside { padding: 15px 15px 15px 30px; }
+            #book-title { font-size: 18px; padding-bottom: 5px; margin-bottom: 5px;}
+            #text-container { margin-bottom: 25px; }
+            #typewriter-text { font-size: 13px; line-height: 1.4; }
+            .banner { top: 5%; font-size: 1rem; padding: 5px 15px;}
+            
+            /* Botón de seguir y terminar en Landscape */
+            #btn-next-page { bottom: 5px; right: 10px; padding: 4px 10px; font-size: 0.85rem; }
+            #btn-more { bottom: -45px; padding: 8px 20px; font-size: 0.9rem; }
+            
+            /* Ajustes juegos horizontal */
+            .game-panel { padding: 15px; margin-top: 10px; }
+            .game-title { font-size: 1.4rem; margin-bottom: 5px; }
+            #game1-subtitle { margin-bottom: 5px; }
+            .table { height: 100px; margin-top: 10px; border-bottom-width: 5px; }
+            .cup { width: 45px; height: 60px; bottom: 80px; border-bottom-width: 8px; }
+            .cup.lifted { bottom: 40px !important; }
+            .key-item { font-size: 1.8rem; bottom: 10px; }
+            .key-zoomed { transform: translateX(-50%) scale(2) translateY(-5px) !important; }
+            #big-announcement { font-size: 1.5rem; }
+            
+            #typewriter-question { font-size: 1.1rem; min-height: 30px; margin-bottom: 10px; }
+            .chests-container { gap: 20px; margin-top: 15px; }
+            .chest-box { width: 60px; height: 40px; }
+            .chest-lid { width: 60px; height: 20px; top: -20px; }
+            .chest-lock { left: 24px; top: -5px; width: 6px; height: 10px; }
+            .emoji-hint { font-size: 1.3rem; top: -2px; }
+            #flying-key { font-size: 1.8rem; bottom: -30px; }
+            
+            .modal-box { width: 320px; padding: 15px; transform: scale(0.9); }
+            .modal-overlay.active .modal-box { transform: scale(1); }
+            .eng-photo { width: 80px; height: 80px; }
+            .eng-photo.big { width: 140px; height: 140px; }
+            .speech-bubble { font-size: 1.2rem; padding: 10px 15px; margin-bottom: 15px;}
+            
+            .fade-in-text { font-size: 1.8rem; margin-bottom: 5px;}
+            .fade-in-delayed-text { font-size: 1.2rem; margin-top: 10px; }
+            .fade-in-delayed-img { width: 150px; margin-top: 10px; }
         }
     </style>
 </head>
@@ -234,22 +296,30 @@
     <div class="border-decor tl">🌸</div><div class="border-decor tr">🌸</div>
     <div class="border-decor bl">👑</div><div class="border-decor br">👑</div>
 
-    <!-- ================= PANTALLA 1: EL SOBRE ================= -->
+    <!-- ================= PANTALLA 1: EL LIBRO ================= -->
     <section id="page-index">
         <div class="banner" id="banner-click">¡Dame click! 👇</div>
-        <div class="card-container" id="card-container">
-            <div class="card">
-                <div class="card-cover">
-                    <div class="card-front"><h1>Para ti mi reina 👑</h1><p>Toca para abrir ✨</p></div>
-                    <div class="card-back-cover">🎉</div>
+        <div class="book-container" id="book-container">
+            <div class="book">
+                <div class="book-cover">
+                    <div class="book-front">
+                        <h1>Para ti mi reina 👑</h1>
+                        <p>Toca para abrir el libro ✨</p>
+                    </div>
+                    <div class="book-back-cover"></div>
                 </div>
-                <div class="card-inside">
-                    <h3>¡Feliz Cumpleaños!</h3>
-                    <span id="typewriter-text"></span><span class="cursor" id="cursor">&nbsp;</span>
+                <div class="book-inside" id="book-inside">
+                    <h3 id="book-title">¡Feliz Cumpleaños!</h3>
+                    <div id="text-container">
+                        <span id="typewriter-text"></span><span class="cursor" id="cursor">&nbsp;</span>
+                        <div class="page-turn-overlay" id="page-overlay"></div>
+                    </div>
+                    <!-- BOTÓN CORONA PARA PASAR PÁGINA -->
+                    <button id="btn-next-page">👑 Seguir</button>
                 </div>
+                <button id="btn-more"></button>
             </div>
         </div>
-        <button id="btn-more"></button>
     </section>
 
     <!-- ================= PANTALLA 2: JUEGO DE VASOS ================= -->
@@ -314,9 +384,7 @@
     <!-- ================= MODALES ================= -->
     <div class="modal-overlay" id="modal-engineer">
         <div class="modal-box">
-            <!-- FOTO EN LOS MODALES -->
             <img id="img-engineer" src="https://nalef-initiative.github.io/static/Andres_Quinones.jpeg" alt="Andres" class="eng-photo">
-            
             <h2 id="eng-title">Título</h2>
             <div id="eng-text">Texto</div>
             <button class="btn btn-primary" id="eng-btn">Botón</button>
@@ -337,14 +405,14 @@
     </div>
 
     <div class="modal-overlay" id="modal-win">
-        <div class="modal-box" style="width: 400px;">
+        <div class="modal-box" style="width: 400px; max-width: 95%;">
             <h2>¡Felicidades! 🎉</h2>
             <p>Eres la mejor resolviendo retos. Aquí tienes tu sorpresa:</p>
             <div class="party-details">
                 <strong>📍 Lugar:</strong> [A la espera de que no te me mueras antes del 16]<br><br>
                 <strong>🕒 Hora:</strong> [6:00 PM]<br><br>
                 <strong>👗 Código de vestimenta:</strong> Hermosa como siempre<br><br>
-                <em>POSDATA: HAY QUE TOMARNOS FOTOS JUNTOS, PORQUE NO TUVE PARA COLOCARTE EN LA PAGINA</em>
+                <em style="font-size: 0.9rem;">POSDATA: Hay que tomarnos fotos juntos porque no tuve para colocar mientras hacía esto.</em>
             </div>
             <button class="btn btn-primary" onclick="goToEndSequence();">¡Celebrar! 🥳</button>
         </div>
@@ -375,30 +443,81 @@
             }
         }
 
-        // 2. Tarjeta Inicial y Redirección Automática
-        const cardContainer = document.getElementById('card-container');
-        const btnMore = document.getElementById('btn-more');
+        // 2. Libro Inicial y Sistema de PAGINACIÓN CONTROLADA POR BOTÓN
+        const bookContainer = document.getElementById('book-container');
+        const textContainer = document.getElementById('text-container');
         const twText = document.getElementById('typewriter-text');
-        const msgCarta = `Mi reina, hoy cumples 25 años, y he tenido el placer de conocerte por casi año y medio, he de decir que nunca deja de sorprenderme como cada vez que descubro más de ti, me pareces más increíble, eres una mujer muy inteligente, considerada, atenta y únicamente rara (en el buen sentido de la palabra), aparte de trabajadora y valiente, por qué tomas las oportunidades sin saber si te ira bien o mal y les sacas el mayor provecho, así como te fuiste a santa Marta y usaste todas esas experiencias adquiridas para volverte una mejor mujer , también e de decir lo difícil que es encontrar una mujer como tú hoy en día, siendo hermosa por fuera y por dentro pero sobre todo una mujer de la cual me enorgullece hablar el día de hoy, también me gustan esas pequeñas cosas que haces como voltear la cara cuando te ríes para que yo no te vea, pero se que te estás riendo porque puedo ver como tus pómulos se levantan desde atrás o tu gran humor sarcástico, te quiero con las grandes y fabulosas cualidades que tienes y las que no son tan fabulosas (como tu manejo del tiempo) que al final del dia hacen que seas tú, y eso es lo que más me gusta de ti, te deseo un feliz cumpleaños, espero que este día sea tan fabuloso como tú lo eres para mí, y que podamos seguir celebrando muchos más juntos`;
+        const btnMore = document.getElementById('btn-more');
+        const btnNextPage = document.getElementById('btn-next-page');
+        const bookTitle = document.getElementById('book-title');
+        const overlay = document.getElementById('page-overlay');
+        
+        const msgCarta = `Mi reina, hoy cumples 25 años, y he tenido el placer de conocerte por casi año y medio, he de decir que nunca deja de sorprenderme como cada vez que descubro más de ti, me pareces más increíble, eres una mujer muy inteligente, considerada, atenta y únicamente rara (en el buen sentido de la palabra), aparte de trabajadora y valiente, por qué tomas las oportunidades sin saber si te ira bien o mal y les sacas el mayor provecho, así como te fuiste a santa Marta y usaste todas esas experiencias adquiridas para volverte una mejor mujer , también e de decir lo difícil que es encontrar una mujer como tú hoy en día, siendo hermosa por fuera y por dentro pero sobre todo una mujer de la cual me enorgullece hablar el día de hoy, también me gustan esas pequeñas cosas que haces como voltear la cara cuando te ríes para que yo no te vea, pero se que te estás riendo porque puedo ver como tus pómulos se levantan desde atrás o tu gran humor sarcástico, te quiero con las grandes y fabulosas cualidades que tienes y las que no son tan fabulosas (como tu manejo del tiempo) que al final del día hacen que seas tú, y eso es lo que más me gusta de ti, te deseo un feliz cumpleaños, espero que este día sea tan fabuloso como tú lo eres para mí, y que podamos seguir celebrando muchos más juntos`;
+        
         let cIdx = 0, isTyping = false, autoRedirectTimer, btnClicked = false;
+        let isTurningPage = false, isWaitingForNextPage = false;
 
         function typeWriter() { 
+            if(isTurningPage || isWaitingForNextPage) return;
+
             if (cIdx < msgCarta.length) { 
-                twText.textContent += msgCarta.charAt(cIdx); cIdx++; setTimeout(typeWriter, 40); 
+                const char = msgCarta.charAt(cIdx);
+                const prevText = twText.textContent;
+                twText.textContent += char; 
+                
+                // Si la letra hace desbordar el texto...
+                if (textContainer.scrollHeight > textContainer.clientHeight) {
+                    twText.textContent = prevText; // Borramos la letra
+                    isWaitingForNextPage = true;   // Pausamos la escritura
+                    btnNextPage.classList.add('visible'); // Mostramos el botón "👑 Seguir"
+                    return;
+                }
+                
+                cIdx++;
+                setTimeout(typeWriter, 48); // Velocidad: ~250 ppm
             } else {
                 btnMore.classList.add('visible'); typeButton();
                 autoRedirectTimer = setTimeout(() => {
-                    if (!btnClicked) {
-                        btnMore.click(); 
-                    }
+                    if (!btnClicked) btnMore.click(); 
                 }, 8000);
             }
         }
+
+        // Evento del botón "Seguir"
+        btnNextPage.addEventListener('click', (e) => {
+            e.stopPropagation(); // Evita que se dispare el click general del libro
+            btnNextPage.classList.remove('visible');
+            turnPage();
+        });
+
+        async function turnPage() {
+            isTurningPage = true;
+            isWaitingForNextPage = false;
+            
+            // Aparece la "hoja en blanco"
+            overlay.classList.add('page-turning');
+            await sleep(600);
+            
+            // Vaciamos texto y ocultamos el título principal
+            twText.textContent = '';
+            if (bookTitle.style.display !== 'none') {
+                bookTitle.style.display = 'none';
+            }
+            
+            // Retiramos la animación de la hoja
+            overlay.classList.remove('page-turning');
+            await sleep(600);
+            
+            // Continuamos escribiendo
+            isTurningPage = false;
+            typeWriter();
+        }
+
         function typeButton() { const txt = "¿Quieres ver más?"; if(btnMore.textContent.length < txt.length) { btnMore.textContent += txt.charAt(btnMore.textContent.length); setTimeout(typeButton, 80); } }
 
-        cardContainer.addEventListener('click', () => {
-            if(!cardContainer.classList.contains('open')) {
-                cardContainer.classList.add('open'); document.getElementById('banner-click').style.opacity = '0';
+        bookContainer.addEventListener('click', () => {
+            if(!bookContainer.classList.contains('open')) {
+                bookContainer.classList.add('open'); document.getElementById('banner-click').style.opacity = '0';
                 fireConfettiBurst();
                 setTimeout(() => { if (!isTyping) { isTyping = true; typeWriter(); } }, 1000);
             }
@@ -419,7 +538,7 @@
             document.getElementById('eng-timer').style.display = showTimer ? 'block' : 'none';
             
             const imgEl = document.getElementById('img-engineer');
-            imgEl.className = 'eng-photo'; // Reset a la clase base
+            imgEl.className = 'eng-photo'; 
             
             if(state === 'meme_only') {
                 imgEl.style.display = 'none';
@@ -427,7 +546,6 @@
             } else {
                 imgEl.style.display = 'inline-block';
                 document.getElementById('eng-title').style.display = 'block';
-                
                 if(state === 'angry') imgEl.classList.add('anim-angry');
                 if(state === 'laughing') imgEl.classList.add('anim-laughing');
                 if(state === 'wink_tongue') imgEl.classList.add('anim-wink');
@@ -435,15 +553,13 @@
 
             document.getElementById('modal-engineer').classList.add('active');
         }
-        
-        function hideEngineerModal() {
-            document.getElementById('modal-engineer').classList.remove('active');
-        }
+        function hideEngineerModal() { document.getElementById('modal-engineer').classList.remove('active'); }
 
-        // 4. Navegación
-        btnMore.addEventListener('click', () => { 
+        // 4. Navegación principal (Retos)
+        btnMore.addEventListener('click', (e) => { 
+            e.stopPropagation(); 
             btnClicked = true;
-            clearTimeout(autoRedirectTimer); // Cancelar la redirección automática si ya hizo clic
+            clearTimeout(autoRedirectTimer); 
             document.getElementById('modal-question').classList.add('active'); 
         });
         
@@ -473,29 +589,18 @@
         const g1Subtitle = document.getElementById('game1-subtitle');
         const g1Title = document.getElementById('game1-title');
         const pos = ['20%', '50%', '80%'];
-        
         let cupIdx = [0, 1, 2], winningCup = 1, g1Active = false, g1Errors = 0;
 
         async function startGame1() {
-            g1Active = false;
-            g1Subtitle.style.opacity = '0'; 
-            g1Title.style.opacity = '0';
-
+            g1Active = false; g1Subtitle.style.opacity = '0'; g1Title.style.opacity = '0';
             cupIdx = [0, 1, 2];
-            cups[0].style.left = pos[0];
-            cups[1].style.left = pos[1];
-            cups[2].style.left = pos[2];
-            
+            cups[0].style.left = pos[0]; cups[1].style.left = pos[1]; cups[2].style.left = pos[2];
             cups.forEach(c => { c.style.bottom = '150px'; c.classList.remove('lifted'); });
             
-            keyItem.className = 'key-item key-zoomed';
-            keyItem.style.left = '50%';
-            bigAnnounce.classList.add('show');
-            
+            keyItem.className = 'key-item key-zoomed'; keyItem.style.left = '50%'; bigAnnounce.classList.add('show');
             await sleep(2500);
             
-            bigAnnounce.classList.remove('show');
-            keyItem.className = 'key-item';
+            bigAnnounce.classList.remove('show'); keyItem.className = 'key-item';
             await sleep(800);
             
             cups.forEach(c => c.style.bottom = '0px'); 
@@ -504,9 +609,7 @@
             keyItem.classList.add('key-hidden');
             await sleep(300);
             
-            g1Title.style.opacity = '1';
-            g1Subtitle.style.opacity = '1';
-            
+            g1Title.style.opacity = '1'; g1Subtitle.style.opacity = '1';
             await shuffleCups();
             g1Active = true;
         }
@@ -525,32 +628,20 @@
         cups.forEach((cup, i) => {
             cup.addEventListener('click', async () => {
                 if(!g1Active) return;
-                g1Active = false;
-                cup.classList.add('lifted');
+                g1Active = false; cup.classList.add('lifted');
                 
                 if(i === winningCup) {
-                    // ¡Encontró la llave exitosamente!
-                    keyItem.style.left = pos[cupIdx[i]];
-                    keyItem.classList.remove('key-hidden');
+                    keyItem.style.left = pos[cupIdx[i]]; keyItem.classList.remove('key-hidden');
                     await sleep(1500);
-                    
                     let finalMsg = g1Errors > 0 
                         ? 'Bueno... Parece que también eres buena en esto, vamos a ver si todavía te acuerdas cuando trabajamos juntos'
                         : '¡Vea pues! a la primera, quien lo diria, vamos a ver si todavia te acuerdas de cuando trabajabamos juntos';
-
                     showEngineerModal('¡Bien hecho! 🔑', finalMsg, 'Siguiente Reto', 'laughing', switchToGame2);
                 } else {
-                    g1Errors++;
-                    await sleep(600);
-                    cup.classList.remove('lifted');
-                    
-                    if (g1Errors === 1) {
-                        showEngineerModal('¡Fallaste! ❌', 'Pensé que eras buena en juegos, pero veo que solo en el parchís... 😂', 'Volver a intentar', 'laughing', startGame1);
-                    } else if (g1Errors === 2) {
-                        showEngineerModal('¡Ay Dios! 😜', '¡Vea usted, menos mal que te deje ganar en el parchís!', 'Intentar otra vez', 'wink_tongue', startGame1);
-                    } else {
-                        showEngineerModal('¡No puede ser! 📸', 'Envía captura de pantalla para reírme', 'Ok, reintentar...', 'laughing', startGame1);
-                    }
+                    g1Errors++; await sleep(600); cup.classList.remove('lifted');
+                    if (g1Errors === 1) { showEngineerModal('¡Fallaste! ❌', 'Pensé que eras buena en juegos, pero veo que solo en el parchís... 😂', 'Volver a intentar', 'laughing', startGame1);
+                    } else if (g1Errors === 2) { showEngineerModal('¡Ay Dios! 😜', '¡Vea usted, menos mal que te deje ganar en el parchís!', 'Intentar otra vez', 'wink_tongue', startGame1);
+                    } else { showEngineerModal('¡No puede ser! 📸', 'Envía captura de pantalla para reírme', 'Ok, reintentar...', 'laughing', startGame1); }
                 }
             });
         });
@@ -563,67 +654,43 @@
         function switchToGame2() {
             document.getElementById('page-game1').style.display = 'none';
             document.getElementById('page-game2').style.display = 'flex';
-            
             const qTxt = "¿ Con qué emoji nos dijo Ernesto que teníamos que ser proactivos ?";
-            const qEl = document.getElementById('typewriter-question');
-            let qIdx = 0;
+            const qEl = document.getElementById('typewriter-question'); let qIdx = 0;
             function typeQ() { if(qIdx < qTxt.length) { qEl.textContent += qTxt.charAt(qIdx); qIdx++; setTimeout(typeQ, 50); } else { g2Active = true; } }
             setTimeout(typeQ, 1000);
         }
 
         async function checkChest(idx) {
             if(!g2Active) return;
-            
-            if(idx === 1) { 
-                g2Active = false; await triggerWinSequence();
-            } else {
+            if(idx === 1) { g2Active = false; await triggerWinSequence(); } else {
                 g2Active = false; chestErrors++;
                 if(chestErrors === 1) {
-                    let memeHTML = `
-                        <div style="font-size: 1.1rem; font-weight: bold; color: var(--rojo-oscuro); margin-bottom: 15px;">
-                            así que soy el único que se acuerda de esos tiempos
-                        </div>
-                        <img src="https://i.pinimg.com/736x/c0/89/95/c089958a0f85d975699a4ffba83bf74a.jpg" style="width: 100%; max-width: 250px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-                    `;
+                    let memeHTML = `<div style="font-size: 1.1rem; font-weight: bold; color: var(--rojo-oscuro); margin-bottom: 15px;">así que soy el único que se acuerda de esos tiempos</div><img src="https://i.pinimg.com/736x/c0/89/95/c089958a0f85d975699a4ffba83bf74a.jpg" style="width: 100%; max-width: 250px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">`;
                     showEngineerModal('', memeHTML, 'Intenta otra vez', 'meme_only', () => { g2Active = true; });
-                } else {
-                    showEngineerModal('¡Ay no! 😤', '¡Yo lo hago entonces!', 'Dejar que el ingeniero lo haga', 'angry', async () => { await triggerWinSequence(); });
-                }
+                } else { showEngineerModal('¡Ay no! 😤', '¡Yo lo hago entonces!', 'Dejar que el ingeniero lo haga', 'angry', async () => { await triggerWinSequence(); }); }
             }
         }
 
         async function triggerWinSequence() {
-            const flyingKey = document.getElementById('flying-key');
-            const targetChest = document.getElementById('chest-1');
-            
+            const flyingKey = document.getElementById('flying-key'); const targetChest = document.getElementById('chest-1');
             flyingKey.style.opacity = '1'; await sleep(500);
-            flyingKey.style.bottom = '100px'; flyingKey.style.transform = 'translateX(-50%) scale(0.5)';
-            await sleep(1000);
-            
-            flyingKey.style.opacity = '0'; targetChest.classList.add('open');
-            await sleep(800);
-            
-            document.getElementById('modal-win').classList.add('active');
-            fireConfettiBurst();
+            flyingKey.style.bottom = '100px'; flyingKey.style.transform = 'translateX(-50%) scale(0.5)'; await sleep(1000);
+            flyingKey.style.opacity = '0'; targetChest.classList.add('open'); await sleep(800);
+            document.getElementById('modal-win').classList.add('active'); fireConfettiBurst();
         }
 
         // ==========================================
         // 7. TRANSICIÓN FINAL
         // ==========================================
         function goToEndSequence() {
-            document.getElementById('modal-win').classList.remove('active');
-            document.getElementById('page-game2').style.display = 'none';
-            
+            document.getElementById('modal-win').classList.remove('active'); document.getElementById('page-game2').style.display = 'none';
             document.getElementById('page-engineer').style.display = 'flex';
-            
-            // Asigna animación al avatar final
             document.getElementById('img-big-engineer').classList.add('anim-wink');
 
             setTimeout(() => {
                 document.getElementById('page-engineer').style.display = 'none';
                 document.getElementById('sky').style.display = 'none';
                 document.querySelectorAll('.border-decor').forEach(el => el.style.display = 'none');
-                
                 document.getElementById('page-final').style.display = 'flex';
             }, 4000);
         }
