@@ -87,7 +87,7 @@
             flex-grow: 1; height: 0; 
             width: 100%; position: relative; overflow: hidden; 
             margin-top: 5px;
-            margin-bottom: 35px; /* Espacio reservado para el botón */
+            margin-bottom: 35px; 
         }
 
         #typewriter-text { color: #333; font-size: 15px; text-align: justify; line-height: 1.6; white-space: pre-wrap; display: inline; font-family: 'Georgia', serif;}
@@ -101,18 +101,30 @@
         }
         .page-turning { opacity: 1; }
 
-        /* Botón de Paginación Interno (Corona) */
+        /* =========================================
+           BOTÓN CORONA PARA PASAR PÁGINA (CORREGIDO PARA MÓVILES)
+           ========================================= */
         #btn-next-page {
             position: absolute; bottom: 15px; right: 20px;
             background-color: var(--blanco); color: var(--rojo-titulos);
             border: 2px solid #fbbf24; padding: 6px 15px;
             font-size: 1rem; font-weight: bold; border-radius: 20px;
             cursor: pointer; opacity: 0; pointer-events: none;
-            transition: all 0.3s ease; z-index: 20; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease; z-index: 1000; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            -webkit-appearance: none; /* Fuerza a iOS a respetar el estilo */
+            transform: translateZ(30px); /* Evita que el botón se esconda tras el fondo 3D */
         }
-        #btn-next-page.visible { opacity: 1; pointer-events: auto; animation: pulseBtn 1.5s infinite alternate; }
+        #btn-next-page.visible { 
+            opacity: 1; pointer-events: auto; 
+            animation: pulseBtn 1.5s infinite alternate; 
+        }
         #btn-next-page:hover { background-color: #fbbf24; color: #450a0a; }
-        @keyframes pulseBtn { 0% { transform: scale(1); } 100% { transform: scale(1.08); } }
+        
+        @keyframes pulseBtn { 
+            /* Se añade translateZ aquí también para que no se sobreescriba en la animación */
+            0% { transform: translateZ(30px) scale(1); } 
+            100% { transform: translateZ(30px) scale(1.08); } 
+        }
 
         /* Botón Final fuera del libro */
         #btn-more { position: absolute; bottom: -65px; left: 50%; transform: translateX(-50%); background-color: var(--blanco); color: var(--rojo-titulos); border: 2px solid var(--rojo-titulos); padding: 12px 30px; font-size: 1.1rem; font-weight: bold; border-radius: 30px; cursor: pointer; opacity: 0; pointer-events: none; transition: all 0.5s ease; z-index: 15; }
@@ -204,9 +216,9 @@
             .book { width: 290px; height: 420px; }
             .book-container.open { transform: translateX(20px); }
             .book-inside { padding: 20px 15px 20px 25px; }
-            #text-container { margin-bottom: 30px; }
+            #text-container { margin-bottom: 40px; } /* Aumentado para que el texto no lo tape */
             #typewriter-text { font-size: 14px; }
-            #btn-next-page { bottom: 10px; right: 15px; padding: 5px 12px; font-size: 0.9rem; }
+            #btn-next-page { bottom: 10px; right: 15px; padding: 5px 12px; font-size: 0.9rem; border-width: 2px;}
             
             .game-panel { padding: 25px 15px; width: 95%; border-width: 3px; }
             .game-title { font-size: 1.5rem; }
@@ -377,7 +389,7 @@
     <!-- ================= PANTALLA 5: FINAL NEGRO ================= -->
     <section id="page-final">
         <h1 class="fade-in-text">Gracias por llegar a mi vida ❤️</h1>
-        <h2 class="fade-in-delayed-text">¿ Cuantos puntos gane ?</h2>
+        <h2 class="fade-in-delayed-text">¿ Cuantos puntos gané ?</h2>
         <img src="https://i.gifer.com/8V3.gif" alt="Gato Pidiendo Puntos" class="fade-in-delayed-img">
     </section>
 
