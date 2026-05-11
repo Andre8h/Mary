@@ -82,7 +82,7 @@
         }
         #book-title { color: var(--rojo-titulos); text-align: center; margin-top: 0; border-bottom: 2px dashed #f9a8d4; padding-bottom: 10px; font-size: 22px; flex-shrink: 0;}
         
-        /* Contenedor del texto (Margen inferior para dar espacio al botón Seguir) */
+        /* Contenedor del texto (PC: 35px de margen inferior para dar espacio al botón Seguir de escritorio) */
         #text-container { 
             flex-grow: 1; height: 0; 
             width: 100%; position: relative; overflow: hidden; 
@@ -102,31 +102,52 @@
         .page-turning { opacity: 1; }
 
         /* =========================================
-           BOTÓN CORONA PARA PASAR PÁGINA (CORREGIDO PARA MÓVILES)
+           SISTEMA DE DOS BOTONES PARA PASAR PÁGINA
            ========================================= */
-        #btn-next-page {
+        .btn-next-page {
+            cursor: pointer; opacity: 0; pointer-events: none;
+            transition: all 0.3s ease; font-weight: bold;
+        }
+        
+        /* 1. Botón PC (Dentro del libro) */
+        #btn-next-page-desktop {
             position: absolute; bottom: 15px; right: 20px;
             background-color: var(--blanco); color: var(--rojo-titulos);
             border: 2px solid #fbbf24; padding: 6px 15px;
-            font-size: 1rem; font-weight: bold; border-radius: 20px;
-            cursor: pointer; opacity: 0; pointer-events: none;
-            transition: all 0.3s ease; z-index: 1000; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            -webkit-appearance: none; /* Fuerza a iOS a respetar el estilo */
-            transform: translateZ(30px); /* Evita que el botón se esconda tras el fondo 3D */
+            font-size: 1rem; border-radius: 20px;
+            z-index: 1000; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: block; /* Visible por defecto (PC) */
         }
-        #btn-next-page.visible { 
+        #btn-next-page-desktop.visible { 
             opacity: 1; pointer-events: auto; 
             animation: pulseBtn 1.5s infinite alternate; 
         }
-        #btn-next-page:hover { background-color: #fbbf24; color: #450a0a; }
-        
-        @keyframes pulseBtn { 
-            /* Se añade translateZ aquí también para que no se sobreescriba en la animación */
-            0% { transform: translateZ(30px) scale(1); } 
-            100% { transform: translateZ(30px) scale(1.08); } 
+        #btn-next-page-desktop:hover { background-color: #fbbf24; color: #450a0a; }
+
+        /* 2. Botón Móvil (Fuera del libro, adaptado visualmente) */
+        #btn-next-page-mobile {
+            position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%);
+            background-color: var(--rojo-titulos); color: var(--blanco);
+            border: 2px solid #fbbf24; padding: 12px 30px;
+            font-size: 1.2rem; border-radius: 30px;
+            z-index: 1000; box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            display: none; /* Oculto por defecto (PC) */
+        }
+        #btn-next-page-mobile.visible {
+            opacity: 1; pointer-events: auto;
+            animation: pulseBtnMobile 1.5s infinite alternate;
         }
 
-        /* Botón Final fuera del libro */
+        @keyframes pulseBtn { 
+            0% { transform: scale(1); } 
+            100% { transform: scale(1.08); } 
+        }
+        @keyframes pulseBtnMobile { 
+            0% { transform: translateX(-50%) scale(1); } 
+            100% { transform: translateX(-50%) scale(1.08); } 
+        }
+
+        /* Botón Final (Fuera del libro) */
         #btn-more { position: absolute; bottom: -65px; left: 50%; transform: translateX(-50%); background-color: var(--blanco); color: var(--rojo-titulos); border: 2px solid var(--rojo-titulos); padding: 12px 30px; font-size: 1.1rem; font-weight: bold; border-radius: 30px; cursor: pointer; opacity: 0; pointer-events: none; transition: all 0.5s ease; z-index: 15; }
         #btn-more.visible { opacity: 1; pointer-events: auto; bottom: -50px;}
         #btn-more:hover { background-color: var(--rojo-titulos); color: var(--blanco); }
@@ -216,9 +237,14 @@
             .book { width: 290px; height: 420px; }
             .book-container.open { transform: translateX(20px); }
             .book-inside { padding: 20px 15px 20px 25px; }
-            #text-container { margin-bottom: 40px; } /* Aumentado para que el texto no lo tape */
+            
+            /* Al sacar el botón, liberamos espacio de texto en móvil */
+            #text-container { margin-bottom: 15px; }
             #typewriter-text { font-size: 14px; }
-            #btn-next-page { bottom: 10px; right: 15px; padding: 5px 12px; font-size: 0.9rem; border-width: 2px;}
+            
+            /* Activar botón móvil y apagar el de PC */
+            #btn-next-page-desktop { display: none !important; }
+            #btn-next-page-mobile { display: block !important; bottom: 8%; }
             
             .game-panel { padding: 25px 15px; width: 95%; border-width: 3px; }
             .game-title { font-size: 1.5rem; }
@@ -258,12 +284,13 @@
             .book-container.open { transform: translateX(60px); }
             .book-inside { padding: 15px 15px 15px 30px; }
             #book-title { font-size: 18px; padding-bottom: 5px; margin-bottom: 5px;}
-            #text-container { margin-bottom: 25px; }
+            #text-container { margin-bottom: 15px; }
             #typewriter-text { font-size: 13px; line-height: 1.4; }
             .banner { top: 5%; font-size: 1rem; padding: 5px 15px;}
             
-            /* Botón de seguir y terminar en Landscape */
-            #btn-next-page { bottom: 5px; right: 10px; padding: 4px 10px; font-size: 0.85rem; }
+            /* Activar botón móvil y apagar el de PC */
+            #btn-next-page-desktop { display: none !important; }
+            #btn-next-page-mobile { display: block !important; bottom: 3%; padding: 8px 20px; font-size: 1rem; }
             #btn-more { bottom: -45px; padding: 8px 20px; font-size: 0.9rem; }
             
             /* Ajustes juegos horizontal */
@@ -326,12 +353,14 @@
                         <span id="typewriter-text"></span><span class="cursor" id="cursor">&nbsp;</span>
                         <div class="page-turn-overlay" id="page-overlay"></div>
                     </div>
-                    <!-- BOTÓN CORONA PARA PASAR PÁGINA -->
-                    <button id="btn-next-page">👑 Seguir</button>
+                    <!-- BOTÓN CORONA PARA PASAR PÁGINA (ESCRITORIO) -->
+                    <button id="btn-next-page-desktop" class="btn-next-page">👑 Seguir</button>
                 </div>
                 <button id="btn-more"></button>
             </div>
         </div>
+        <!-- BOTÓN CORONA PARA PASAR PÁGINA (MÓVIL) -->
+        <button id="btn-next-page-mobile" class="btn-next-page">👑 Seguir Leyendo</button>
     </section>
 
     <!-- ================= PANTALLA 2: JUEGO DE VASOS ================= -->
@@ -389,7 +418,7 @@
     <!-- ================= PANTALLA 5: FINAL NEGRO ================= -->
     <section id="page-final">
         <h1 class="fade-in-text">Gracias por llegar a mi vida ❤️</h1>
-        <h2 class="fade-in-delayed-text">¿ Cuantos puntos gané ?</h2>
+        <h2 class="fade-in-delayed-text">¿ Cuantos puntos gane ?</h2>
         <img src="https://i.gifer.com/8V3.gif" alt="Gato Pidiendo Puntos" class="fade-in-delayed-img">
     </section>
 
@@ -455,12 +484,16 @@
             }
         }
 
-        // 2. Libro Inicial y Sistema de PAGINACIÓN CONTROLADA POR BOTÓN
+        // 2. Libro Inicial y Sistema de PAGINACIÓN
         const bookContainer = document.getElementById('book-container');
         const textContainer = document.getElementById('text-container');
         const twText = document.getElementById('typewriter-text');
         const btnMore = document.getElementById('btn-more');
-        const btnNextPage = document.getElementById('btn-next-page');
+        
+        // Elementos de los dos botones
+        const btnNextPageDesktop = document.getElementById('btn-next-page-desktop');
+        const btnNextPageMobile = document.getElementById('btn-next-page-mobile');
+        
         const bookTitle = document.getElementById('book-title');
         const overlay = document.getElementById('page-overlay');
         
@@ -481,7 +514,9 @@
                 if (textContainer.scrollHeight > textContainer.clientHeight) {
                     twText.textContent = prevText; // Borramos la letra
                     isWaitingForNextPage = true;   // Pausamos la escritura
-                    btnNextPage.classList.add('visible'); // Mostramos el botón "👑 Seguir"
+                    // Encender ambos botones (CSS oculta el que no corresponde)
+                    btnNextPageDesktop.classList.add('visible'); 
+                    btnNextPageMobile.classList.add('visible'); 
                     return;
                 }
                 
@@ -495,12 +530,17 @@
             }
         }
 
-        // Evento del botón "Seguir"
-        btnNextPage.addEventListener('click', (e) => {
+        // Función unificada para el click en el botón "Seguir"
+        function handleNextPageClick(e) {
             e.stopPropagation(); // Evita que se dispare el click general del libro
-            btnNextPage.classList.remove('visible');
+            btnNextPageDesktop.classList.remove('visible');
+            btnNextPageMobile.classList.remove('visible');
             turnPage();
-        });
+        }
+
+        // Asignamos la función a ambos botones
+        btnNextPageDesktop.addEventListener('click', handleNextPageClick);
+        btnNextPageMobile.addEventListener('click', handleNextPageClick);
 
         async function turnPage() {
             isTurningPage = true;
