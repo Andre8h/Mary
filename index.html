@@ -619,7 +619,7 @@
         
         document.getElementById('btn-no').addEventListener('click', () => {
             document.getElementById('modal-question').classList.remove('active');
-            showEngineerModal('¡Odiosa por ahí no! 😠', 'A mí no me vas a saltar los juegos. Te aguantas.', '', 'angry', null, true, false);
+            showEngineerModal('¡Odiosa por ahí no! 😠', 'No te vas a saltar mis juegos. Te aguantas.', '', 'angry', null, true, false);
             let count = 7; let cdInt = setInterval(() => {
                 count--; document.getElementById('countdown').innerText = count;
                 if(count <= 0) { clearInterval(cdInt); hideEngineerModal(); switchToGame1(); }
