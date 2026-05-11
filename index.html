@@ -479,7 +479,7 @@
                 btnMore.classList.add('visible'); typeButton();
                 autoRedirectTimer = setTimeout(() => {
                     if (!btnClicked) btnMore.click(); 
-                }, 12000);
+                }, 15000);
             }
         }
 
@@ -676,13 +676,25 @@
             flyingKey.style.opacity = '1'; await sleep(500);
             flyingKey.style.bottom = '100px'; flyingKey.style.transform = 'translateX(-50%) scale(0.5)'; await sleep(1000);
             flyingKey.style.opacity = '0'; targetChest.classList.add('open'); await sleep(800);
-            document.getElementById('modal-win').classList.add('active'); fireConfettiBurst();
+            
+            document.getElementById('modal-win').classList.add('active'); 
+            fireConfettiBurst();
+
+            // Avance automático en 12 segundos si ella no le da click al botón de Celebrar
+            winAutoTimer = setTimeout(() => {
+                if (document.getElementById('modal-win').classList.contains('active')) {
+                    goToEndSequence();
+                }
+            }, 12000);
         }
 
         // ==========================================
         // 7. TRANSICIÓN FINAL
         // ==========================================
         function goToEndSequence() {
+            // Cancelar el avance automático si ella hizo clic de forma manual
+            if (winAutoTimer) clearTimeout(winAutoTimer);
+            
             document.getElementById('modal-win').classList.remove('active'); document.getElementById('page-game2').style.display = 'none';
             document.getElementById('page-engineer').style.display = 'flex';
             document.getElementById('img-big-engineer').classList.add('anim-wink');
